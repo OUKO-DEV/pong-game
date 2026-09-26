@@ -1,1 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jay Ouko Pong Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+
+  <div class="game-container">
+
+    <h1>🏓 JAY OU KO PONG</h1>
+    <p class="subtitle">Player vs Computer</p>
+
+    <div class="score-board">
+      <div>
+        <span>PLAYER</span>
+        <strong id="playerScore">0</strong>
+      </div>
+
+      <div>
+        <span>COMPUTER</span>
+        <strong id="computerScore">0</strong>
+      </div>
+    </div>
+
+    <canvas id="pongCanvas" width="800" height="450"></canvas>
+
+    <div class="controls">
+      <button id="upBtn">⬆️ UP</button>
+      <button id="startBtn">▶️ START</button>
+      <button id="downBtn">⬇️ DOWN</button>
+    </div>
+
+    <button id="restartBtn">🔄 RESTART GAME</button>
+
+    <div class="instructions">
+      <p><strong>Computer:</strong> Use ⬆️ and ⬇️ arrow keys</p>
+      <p><strong>Mobile:</strong> Use the UP and DOWN buttons</p>
+      <p>First player to reach <strong>10 points</strong> wins!</p>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
