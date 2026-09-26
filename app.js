@@ -1,449 +1,428 @@
-/* ================================
-   GIFT HUB MARKETPLACE - STYLE.CSS
-   ================================ */
+const canvas = document.getElementById("pongCanvas");
+const ctx = canvas.getContext("2d");
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+const playerScoreElement = document.getElementById("playerScore");
+const computerScoreElement = document.getElementById("computerScore");
+
+const startBtn = document.getElementById("startBtn");
+const restartBtn = document.getElementById("restartBtn");
+
+const upBtn = document.getElementById("upBtn");
+const downBtn = document.getElementById("downBtn");
+
+const WIDTH = canvas.width;
+const HEIGHT = canvas.height;
+
+const WINNING_SCORE = 10;
+
+// Player
+const player = {
+  x: 20,
+  y: HEIGHT / 2 - 50,
+  width: 15,
+  height: 100,
+  speed: 7
+};
+
+// Computer
+const computer = {
+  x: WIDTH - 35,
+  y: HEIGHT / 2 - 50,
+  width: 15,
+  height: 100,
+  speed: 5
+};
+
+// Ball
+const ball = {
+  x: WIDTH / 2,
+  y: HEIGHT / 2,
+  radius: 9,
+  speedX: 5,
+  speedY: 4
+};
+
+let playerScore = 0;
+let computerScore = 0;
+
+let gameRunning = false;
+let animationId = null;
+
+let moveUp = false;
+let moveDown = false;
+
+// Draw rectangle
+function drawRect(x, y, width, height) {
+  ctx.fillStyle = "white";
+  ctx.fillRect(x, y, width, height);
 }
 
-html {
-    scroll-behavior: smooth;
+// Draw ball
+function drawBall() {
+  ctx.beginPath();
+  ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+  ctx.fillStyle = "white";
+  ctx.fill();
+  ctx.closePath();
 }
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f5f7fb;
-    color: #222;
-    line-height: 1.6;
+// Draw center line
+function drawCenterLine() {
+  ctx.strokeStyle = "#444";
+  ctx.lineWidth = 2;
+  ctx.setLineDash([10, 10]);
+
+  ctx.beginPath();
+  ctx.moveTo(WIDTH / 2, 0);
+  ctx.lineTo(WIDTH / 2, HEIGHT);
+  ctx.stroke();
+
+  ctx.setLineDash([]);
 }
 
-/* ===== HEADER ===== */
+// Draw game
+function drawGame() {
+  ctx.clearRect(0, 0, WIDTH, HEIGHT);
 
-header {
-    background: #111827;
-    color: white;
-    padding: 15px 5%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  drawCenterLine();
+
+  drawRect(
+    player.x,
+    player.y,
+    player.width,
+    player.height
+  );
+
+  drawRect(
+    computer.x,
+    computer.y,
+    computer.width,
+    computer.height
+  );
+
+  drawBall();
 }
 
-.logo {
-    font-size: 25px;
-    font-weight: bold;
-    color: #fbbf24;
+// Move player
+function movePlayer() {
+
+  if (moveUp) {
+    player.y -= player.speed;
+  }
+
+  if (moveDown) {
+    player.y += player.speed;
+  }
+
+  // Keep player inside canvas
+  if (player.y < 0) {
+    player.y = 0;
+  }
+
+  if (player.y + player.height > HEIGHT) {
+    player.y = HEIGHT - player.height;
+  }
 }
 
-nav {
-    display: flex;
-    gap: 20px;
-    align-items: center;
+// Move computer
+function moveComputer() {
+
+  const computerCenter =
+    computer.y + computer.height / 2;
+
+  if (computerCenter < ball.y - 10) {
+    computer.y += computer.speed;
+  }
+
+  if (computerCenter > ball.y + 10) {
+    computer.y -= computer.speed;
+  }
+
+  if (computer.y < 0) {
+    computer.y = 0;
+  }
+
+  if (computer.y + computer.height > HEIGHT) {
+    computer.y = HEIGHT - computer.height;
+  }
 }
 
-nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    transition: 0.3s;
+// Reset ball
+function resetBall(direction) {
+
+  ball.x = WIDTH / 2;
+  ball.y = HEIGHT / 2;
+
+  ball.speedX = 5 * direction;
+
+  ball.speedY =
+    (Math.random() > 0.5 ? 1 : -1) *
+    (3 + Math.random() * 2);
 }
 
-nav a:hover {
-    color: #fbbf24;
+// Ball collision with paddles
+function paddleCollision(paddle) {
+
+  return (
+    ball.x - ball.radius < paddle.x + paddle.width &&
+    ball.x + ball.radius > paddle.x &&
+    ball.y - ball.radius < paddle.y + paddle.height &&
+    ball.y + ball.radius > paddle.y
+  );
 }
 
-/* ===== HERO SECTION ===== */
+// Move ball
+function moveBall() {
 
-.hero {
-    min-height: 500px;
-    padding: 80px 5%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: linear-gradient(135deg, #111827, #312e81);
-    color: white;
-}
+  ball.x += ball.speedX;
+  ball.y += ball.speedY;
 
-.hero-content {
-    max-width: 800px;
-}
+  // Top wall
+  if (ball.y - ball.radius <= 0) {
+    ball.y = ball.radius;
+    ball.speedY *= -1;
+  }
 
-.hero h1 {
-    font-size: 52px;
-    margin-bottom: 20px;
-}
+  // Bottom wall
+  if (ball.y + ball.radius >= HEIGHT) {
+    ball.y = HEIGHT - ball.radius;
+    ball.speedY *= -1;
+  }
 
-.hero h1 span {
-    color: #fbbf24;
-}
+  // Player paddle collision
+  if (paddleCollision(player) && ball.speedX < 0) {
 
-.hero p {
-    font-size: 20px;
-    margin-bottom: 30px;
-    color: #e5e7eb;
-}
+    ball.x = player.x + player.width + ball.radius;
 
-/* ===== BUTTONS ===== */
+    ball.speedX *= -1;
 
-.btn {
-    display: inline-block;
-    padding: 13px 25px;
-    border-radius: 8px;
-    border: none;
-    text-decoration: none;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
-}
+    const hitPosition =
+      (ball.y - (player.y + player.height / 2)) /
+      (player.height / 2);
 
-.btn-primary {
-    background: #fbbf24;
-    color: #111827;
-}
+    ball.speedY = hitPosition * 6;
 
-.btn-primary:hover {
-    background: #f59e0b;
-    transform: translateY(-2px);
-}
+    increaseSpeed();
+  }
 
-.btn-dark {
-    background: #111827;
-    color: white;
-}
+  // Computer paddle collision
+  if (paddleCollision(computer) && ball.speedX > 0) {
 
-.btn-dark:hover {
-    background: #374151;
-}
+    ball.x = computer.x - ball.radius;
 
-/* ===== GENERAL SECTIONS ===== */
+    ball.speedX *= -1;
 
-section {
-    padding: 60px 5%;
-}
+    const hitPosition =
+      (ball.y - (computer.y + computer.height / 2)) /
+      (computer.height / 2);
 
-.section-title {
-    text-align: center;
-    font-size: 32px;
-    margin-bottom: 35px;
-    color: #111827;
-}
+    ball.speedY = hitPosition * 6;
 
-.section-title span {
-    color: #6366f1;
-}
+    increaseSpeed();
+  }
 
-/* ===== SEARCH ===== */
+  // Ball goes past player
+  if (ball.x + ball.radius < 0) {
 
-.search-container {
-    max-width: 700px;
-    margin: 0 auto 40px;
-    display: flex;
-    gap: 10px;
-}
+    computerScore++;
 
-.search-container input {
-    flex: 1;
-    padding: 15px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 16px;
-    outline: none;
-}
+    updateScore();
 
-.search-container input:focus {
-    border-color: #6366f1;
-}
+    checkWinner();
 
-/* ===== MARKETPLACE ===== */
-
-.products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 25px;
-    max-width: 1200px;
-    margin: auto;
-}
-
-.product-card {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    transition: 0.3s;
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-}
-
-.product-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.product-info {
-    padding: 20px;
-}
-
-.product-info h3 {
-    margin-bottom: 8px;
-    color: #111827;
-}
-
-.product-info p {
-    color: #6b7280;
-    margin-bottom: 10px;
-}
-
-.price {
-    color: #16a34a;
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-/* ===== CATEGORIES ===== */
-
-.categories {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 35px;
-}
-
-.category-btn {
-    padding: 10px 18px;
-    border: 1px solid #6366f1;
-    background: white;
-    color: #6366f1;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.category-btn:hover,
-.category-btn.active {
-    background: #6366f1;
-    color: white;
-}
-
-/* ===== ABOUT ===== */
-
-.about {
-    background: white;
-}
-
-.about-content {
-    max-width: 900px;
-    margin: auto;
-    text-align: center;
-}
-
-.about-content p {
-    color: #4b5563;
-    font-size: 17px;
-    margin-bottom: 20px;
-}
-
-/* ===== CONTACT ===== */
-
-.contact {
-    background: #eef2ff;
-}
-
-.contact-container {
-    max-width: 700px;
-    margin: auto;
-}
-
-.contact-form {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-}
-
-.contact-form input,
-.contact-form textarea,
-.contact-form select {
-    width: 100%;
-    padding: 13px;
-    margin-bottom: 15px;
-    border: 1px solid #d1d5db;
-    border-radius: 7px;
-    font-size: 15px;
-    outline: none;
-}
-
-.contact-form textarea {
-    min-height: 130px;
-    resize: vertical;
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus,
-.contact-form select:focus {
-    border-color: #6366f1;
-}
-
-/* ===== SOCIAL MEDIA ===== */
-
-.social-links {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 25px;
-}
-
-.social-links a {
-    padding: 10px 18px;
-    background: #111827;
-    color: white;
-    text-decoration: none;
-    border-radius: 7px;
-    transition: 0.3s;
-}
-
-.social-links a:hover {
-    background: #6366f1;
-}
-
-/* ===== FOOTER ===== */
-
-footer {
-    background: #111827;
-    color: white;
-    text-align: center;
-    padding: 30px 5%;
-}
-
-footer p {
-    margin-bottom: 10px;
-    color: #d1d5db;
-}
-
-footer a {
-    color: #fbbf24;
-    text-decoration: none;
-}
-
-/* ===== MOBILE MENU ===== */
-
-.menu-toggle {
-    display: none;
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 25px;
-    cursor: pointer;
-}
-
-/* ===== ALERT / MESSAGE ===== */
-
-.message {
-    padding: 12px 15px;
-    border-radius: 7px;
-    margin-bottom: 15px;
-    display: none;
-}
-
-.message.success {
-    background: #dcfce7;
-    color: #166534;
-}
-
-.message.error {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
-/* ===== RESPONSIVE DESIGN ===== */
-
-@media (max-width: 768px) {
-
-    header {
-        padding: 14px 5%;
+    if (gameRunning) {
+      resetBall(1);
     }
+  }
 
-    .menu-toggle {
-        display: block;
-    }
+  // Ball goes past computer
+  if (ball.x - ball.radius > WIDTH) {
 
-    nav {
-        display: none;
-        position: absolute;
-        top: 65px;
-        left: 0;
-        right: 0;
-        background: #111827;
-        flex-direction: column;
-        padding: 20px;
-    }
+    playerScore++;
 
-    nav.active {
-        display: flex;
-    }
+    updateScore();
 
-    .hero {
-        min-height: 450px;
-        padding: 60px 5%;
-    }
+    checkWinner();
 
-    .hero h1 {
-        font-size: 38px;
+    if (gameRunning) {
+      resetBall(-1);
     }
-
-    .hero p {
-        font-size: 17px;
-    }
-
-    .search-container {
-        flex-direction: column;
-    }
-
-    .search-container .btn {
-        width: 100%;
-    }
-
-    section {
-        padding: 45px 5%;
-    }
-
-    .section-title {
-        font-size: 27px;
-    }
+  }
 }
 
-@media (max-width: 480px) {
+// Increase ball speed
+function increaseSpeed() {
 
-    .logo {
-        font-size: 21px;
-    }
+  const maxSpeed = 12;
 
-    .hero h1 {
-        font-size: 32px;
-    }
+  if (Math.abs(ball.speedX) < maxSpeed) {
+    ball.speedX *= 1.08;
+  }
 
-    .hero p {
-        font-size: 16px;
-    }
-
-    .products {
-        grid-template-columns: 1fr;
-    }
-
-    .product-card img {
-        height: 220px;
-    }
+  if (Math.abs(ball.speedY) < maxSpeed) {
+    ball.speedY *= 1.05;
+  }
 }
+
+// Update score
+function updateScore() {
+
+  playerScoreElement.textContent = playerScore;
+  computerScoreElement.textContent = computerScore;
+}
+
+// Check winner
+function checkWinner() {
+
+  if (playerScore >= WINNING_SCORE) {
+
+    gameRunning = false;
+
+    alert("🏆 YOU WIN!");
+
+    startBtn.textContent = "▶️ START";
+  }
+
+  if (computerScore >= WINNING_SCORE) {
+
+    gameRunning = false;
+
+    alert("🤖 COMPUTER WINS!");
+
+    startBtn.textContent = "▶️ START";
+  }
+}
+
+// Game loop
+function gameLoop() {
+
+  if (!gameRunning) {
+    return;
+  }
+
+  movePlayer();
+  moveComputer();
+  moveBall();
+  drawGame();
+
+  animationId = requestAnimationFrame(gameLoop);
+}
+
+// Start game
+function startGame() {
+
+  if (gameRunning) {
+    return;
+  }
+
+  gameRunning = true;
+
+  startBtn.textContent = "⏸️ PLAYING";
+
+  gameLoop();
+}
+
+// Restart game
+function restartGame() {
+
+  cancelAnimationFrame(animationId);
+
+  playerScore = 0;
+  computerScore = 0;
+
+  player.y = HEIGHT / 2 - player.height / 2;
+  computer.y = HEIGHT / 2 - computer.height / 2;
+
+  resetBall(
+    Math.random() > 0.5 ? 1 : -1
+  );
+
+  updateScore();
+
+  gameRunning = true;
+
+  startBtn.textContent = "⏸️ PLAYING";
+
+  gameLoop();
+}
+
+// Keyboard controls
+document.addEventListener("keydown", function(event) {
+
+  if (event.key === "ArrowUp") {
+    moveUp = true;
+    event.preventDefault();
+  }
+
+  if (event.key === "ArrowDown") {
+    moveDown = true;
+    event.preventDefault();
+  }
+
+  if (event.code === "Space") {
+    startGame();
+  }
+});
+
+document.addEventListener("keyup", function(event) {
+
+  if (event.key === "ArrowUp") {
+    moveUp = false;
+  }
+
+  if (event.key === "ArrowDown") {
+    moveDown = false;
+  }
+});
+
+// Mobile UP button
+upBtn.addEventListener("mousedown", () => {
+  moveUp = true;
+});
+
+upBtn.addEventListener("mouseup", () => {
+  moveUp = false;
+});
+
+upBtn.addEventListener("mouseleave", () => {
+  moveUp = false;
+});
+
+upBtn.addEventListener("touchstart", (event) => {
+  event.preventDefault();
+  moveUp = true;
+});
+
+upBtn.addEventListener("touchend", () => {
+  moveUp = false;
+});
+
+// Mobile DOWN button
+downBtn.addEventListener("mousedown", () => {
+  moveDown = true;
+});
+
+downBtn.addEventListener("mouseup", () => {
+  moveDown = false;
+});
+
+downBtn.addEventListener("mouseleave", () => {
+  moveDown = false;
+});
+
+downBtn.addEventListener("touchstart", (event) => {
+  event.preventDefault();
+  moveDown = true;
+});
+
+downBtn.addEventListener("touchend", () => {
+  moveDown = false;
+});
+
+// Buttons
+startBtn.addEventListener("click", startGame);
+
+restartBtn.addEventListener("click", restartGame);
+
+// Initial screen
+drawGame();
