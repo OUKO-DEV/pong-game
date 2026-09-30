@@ -1,49 +1,475 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jay Ouko Pong Game</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>KidStory Studio | Children's Video Creator</title>
+
+    <meta
+        name="description"
+        content="Create fun educational stories and videos for children."
+    >
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <div class="game-container">
+<!-- ================= HEADER ================= -->
+<header class="topbar">
 
-    <h1>🏓 JAY OU KO PONG</h1>
-    <p class="subtitle">Player vs Computer</p>
-
-    <div class="score-board">
-      <div>
-        <span>PLAYER</span>
-        <strong id="playerScore">0</strong>
-      </div>
-
-      <div>
-        <span>COMPUTER</span>
-        <strong id="computerScore">0</strong>
-      </div>
+    <div class="logo">
+        <span class="logo-icon">🧸</span>
+        <span>KidStory <strong>Studio</strong></span>
     </div>
 
-    <canvas id="pongCanvas" width="800" height="450"></canvas>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#creator">Create</a>
+        <a href="#preview">Preview</a>
+    </nav>
 
-    <div class="controls">
-      <button id="upBtn">⬆️ UP</button>
-      <button id="startBtn">▶️ START</button>
-      <button id="downBtn">⬇️ DOWN</button>
+    <button id="themeBtn" class="theme-btn" title="Change theme">
+        🌙
+    </button>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+<section id="home" class="hero">
+
+    <div class="hero-content">
+
+        <span class="badge">✨ CREATE • LEARN • IMAGINE</span>
+
+        <h1>
+            Turn your ideas into
+            <span>children's stories.</span>
+        </h1>
+
+        <p>
+            Create colourful educational stories for kids using characters,
+            scenes, narration and music.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="#creator" class="primary-btn">
+                🎬 Start Creating
+            </a>
+
+            <a href="#how" class="secondary-btn">
+                How It Works
+            </a>
+        </div>
+
     </div>
 
-    <button id="restartBtn">🔄 RESTART GAME</button>
+    <div class="hero-art">
 
-    <div class="instructions">
-      <p><strong>Computer:</strong> Use ⬆️ and ⬇️ arrow keys</p>
-      <p><strong>Mobile:</strong> Use the UP and DOWN buttons</p>
-      <p>First player to reach <strong>10 points</strong> wins!</p>
+        <div class="sun">☀️</div>
+
+        <div class="cloud cloud-one">☁️</div>
+        <div class="cloud cloud-two">☁️</div>
+
+        <div class="character">
+            🐰
+        </div>
+
+        <div class="floating-card card-one">
+            📚 Learn
+        </div>
+
+        <div class="floating-card card-two">
+            🎵 Music
+        </div>
+
     </div>
 
-  </div>
+</section>
 
-  <script src="app.js"></script>
+
+<!-- ================= FEATURES ================= -->
+<section class="features">
+
+    <div class="section-heading">
+        <span>WHAT YOU CAN CREATE</span>
+        <h2>Everything you need for kids' stories</h2>
+    </div>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+            <div class="feature-icon">📖</div>
+            <h3>Stories</h3>
+            <p>Create simple and exciting stories for children.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🧒</div>
+            <h3>Characters</h3>
+            <p>Choose fun characters for your story.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🎨</div>
+            <h3>Scenes</h3>
+            <p>Turn different parts of your story into scenes.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🎙️</div>
+            <h3>Narration</h3>
+            <p>Add voice narration to your story.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CREATOR ================= -->
+<section id="creator" class="creator-section">
+
+    <div class="section-heading">
+        <span>VIDEO CREATOR</span>
+        <h2>Create your children's story</h2>
+        <p>Fill in the information below and generate your scenes.</p>
+    </div>
+
+
+    <div class="creator-layout">
+
+        <!-- LEFT PANEL -->
+        <div class="creator-panel">
+
+            <div class="input-group">
+
+                <label for="videoTitle">
+                    Video title
+                </label>
+
+                <input
+                    id="videoTitle"
+                    type="text"
+                    placeholder="Example: The Brave Little Rabbit"
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="storyText">
+                    Your story
+                </label>
+
+                <textarea
+                    id="storyText"
+                    rows="8"
+                    placeholder="Write your children's story here..."
+                ></textarea>
+
+            </div>
+
+
+            <div class="two-columns">
+
+                <div class="input-group">
+
+                    <label for="ageGroup">
+                        Age group
+                    </label>
+
+                    <select id="ageGroup">
+                        <option value="3-5">3–5 years</option>
+                        <option value="6-8">6–8 years</option>
+                        <option value="9-12">9–12 years</option>
+                    </select>
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="videoStyle">
+                        Style
+                    </label>
+
+                    <select id="videoStyle">
+
+                        <option value="cartoon">
+                            Cartoon
+                        </option>
+
+                        <option value="adventure">
+                            Adventure
+                        </option>
+
+                        <option value="education">
+                            Educational
+                        </option>
+
+                        <option value="fairytale">
+                            Fairytale
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- CHARACTER -->
+            <div class="input-group">
+
+                <label>Choose a character</label>
+
+                <div class="character-options">
+
+                    <button
+                        class="character-option active"
+                        data-character="🐰"
+                    >
+                        🐰
+                        <span>Rabbit</span>
+                    </button>
+
+                    <button
+                        class="character-option"
+                        data-character="🐻"
+                    >
+                        🐻
+                        <span>Bear</span>
+                    </button>
+
+                    <button
+                        class="character-option"
+                        data-character="🦊"
+                    >
+                        🦊
+                        <span>Fox</span>
+                    </button>
+
+                    <button
+                        class="character-option"
+                        data-character="🐼"
+                    >
+                        🐼
+                        <span>Panda</span>
+                    </button>
+
+                    <button
+                        class="character-option"
+                        data-character="🐱"
+                    >
+                        🐱
+                        <span>Cat</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- OPTIONS -->
+            <div class="options">
+
+                <label class="check-row">
+
+                    <input
+                        type="checkbox"
+                        id="narration"
+                        checked
+                    >
+
+                    <span>🎙️ Add narration</span>
+
+                </label>
+
+
+                <label class="check-row">
+
+                    <input
+                        type="checkbox"
+                        id="music"
+                        checked
+                    >
+
+                    <span>🎵 Add background music</span>
+
+                </label>
+
+            </div>
+
+
+            <div class="creator-buttons">
+
+                <button
+                    id="generateBtn"
+                    class="primary-btn full-btn"
+                >
+                    ✨ Generate Story
+                </button>
+
+                <button
+                    id="clearBtn"
+                    class="clear-btn"
+                >
+                    Clear
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT PANEL -->
+        <div class="preview-panel">
+
+            <div class="preview-header">
+
+                <div>
+                    <span>LIVE PREVIEW</span>
+                    <h3 id="previewTitle">
+                        Your story will appear here
+                    </h3>
+                </div>
+
+                <div class="preview-status" id="status">
+                    Ready
+                </div>
+
+            </div>
+
+
+            <div id="storyPreview" class="story-preview">
+
+                <div class="empty-preview">
+
+                    <div class="empty-icon">🎬</div>
+
+                    <h3>Your video preview</h3>
+
+                    <p>
+                        Enter a story and click
+                        <strong>Generate Story</strong>.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="preview-controls">
+
+                <button id="prevBtn" disabled>
+                    ◀ Previous
+                </button>
+
+                <span id="sceneCounter">
+                    Scene 0 / 0
+                </span>
+
+                <button id="nextBtn" disabled>
+                    Next ▶
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HOW IT WORKS ================= -->
+<section id="how" class="how-section">
+
+    <div class="section-heading">
+
+        <span>HOW IT WORKS</span>
+
+        <h2>Three simple steps</h2>
+
+    </div>
+
+
+    <div class="steps">
+
+        <div class="step">
+
+            <div class="step-number">1</div>
+
+            <h3>Write your story</h3>
+
+            <p>
+                Type or paste your children's story.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">2</div>
+
+            <h3>Choose your style</h3>
+
+            <p>
+                Select a character and video style.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">3</div>
+
+            <h3>Generate</h3>
+
+            <p>
+                Turn your story into scenes ready for your video.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+<footer>
+
+    <div class="footer-logo">
+        🧸 KidStory Studio
+    </div>
+
+    <p>
+        A creative playground for children's stories.
+    </p>
+
+    <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#creator">Create</a>
+        <a href="#how">How it works</a>
+    </div>
+
+    <p class="copyright">
+        © <span id="year"></span> KidStory Studio
+    </p>
+
+</footer>
+
+
+<script src="app.js"></script>
+
 </body>
 </html>
+```
