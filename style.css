@@ -1,1120 +1,591 @@
-```css
+```javascript
 /* =====================================================
    KIDSTORY STUDIO
-   MAIN STYLES
+   MAIN JAVASCRIPT
 ===================================================== */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family:
-        Inter,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
-    background: #fffaf2;
-    color: #20242b;
-    line-height: 1.6;
-}
+"use strict";
 
 
 /* =====================================================
-   HEADER
+   ELEMENTS
 ===================================================== */
 
-.topbar {
-    width: 100%;
-    min-height: 72px;
+const videoTitle =
+    document.getElementById("videoTitle");
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+const storyText =
+    document.getElementById("storyText");
 
-    padding: 0 6%;
+const ageGroup =
+    document.getElementById("ageGroup");
 
-    background: rgba(255, 255, 255, 0.94);
+const videoStyle =
+    document.getElementById("videoStyle");
 
-    border-bottom: 1px solid #eee5d8;
+const narration =
+    document.getElementById("narration");
 
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
+const music =
+    document.getElementById("music");
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 9px;
+const generateBtn =
+    document.getElementById("generateBtn");
 
-    font-size: 1.15rem;
-    font-weight: 700;
-}
+const clearBtn =
+    document.getElementById("clearBtn");
 
-.logo-icon {
-    font-size: 1.7rem;
-}
+const storyPreview =
+    document.getElementById("storyPreview");
 
-.logo strong {
-    color: #ff6b35;
-}
+const previewTitle =
+    document.getElementById("previewTitle");
 
-.topbar nav {
-    display: flex;
-    gap: 30px;
-}
+const status =
+    document.getElementById("status");
 
-.topbar nav a {
-    text-decoration: none;
-    color: #444;
-    font-weight: 600;
-}
+const prevBtn =
+    document.getElementById("prevBtn");
 
-.topbar nav a:hover {
-    color: #ff6b35;
-}
+const nextBtn =
+    document.getElementById("nextBtn");
 
-.theme-btn {
-    width: 42px;
-    height: 42px;
+const sceneCounter =
+    document.getElementById("sceneCounter");
 
-    border: 1px solid #ddd;
-    border-radius: 50%;
+const themeBtn =
+    document.getElementById("themeBtn");
 
-    background: white;
-
-    cursor: pointer;
-
-    font-size: 1.1rem;
-}
+const year =
+    document.getElementById("year");
 
 
 /* =====================================================
-   HERO
+   VARIABLES
 ===================================================== */
 
-.hero {
-    min-height: 650px;
+let selectedCharacter = "🐰";
 
-    padding: 80px 7%;
+let scenes = [];
 
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-
-    align-items: center;
-
-    gap: 50px;
-
-    overflow: hidden;
-}
-
-.hero-content {
-    max-width: 650px;
-}
-
-.badge {
-    display: inline-block;
-
-    padding: 8px 15px;
-
-    border-radius: 30px;
-
-    background: #fff0e7;
-
-    color: #f05a28;
-
-    font-size: 0.8rem;
-    font-weight: 800;
-
-    letter-spacing: 0.8px;
-}
-
-.hero h1 {
-    margin-top: 22px;
-
-    font-size: clamp(2.6rem, 5vw, 5rem);
-
-    line-height: 1.05;
-
-    letter-spacing: -2px;
-}
-
-.hero h1 span {
-    color: #ff6b35;
-}
-
-.hero p {
-    margin-top: 25px;
-
-    max-width: 580px;
-
-    color: #626875;
-
-    font-size: 1.1rem;
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 15px;
-
-    margin-top: 32px;
-}
-
-.primary-btn,
-.secondary-btn,
-.clear-btn {
-    display: inline-flex;
-
-    align-items: center;
-    justify-content: center;
-
-    min-height: 48px;
-
-    padding: 0 22px;
-
-    border-radius: 12px;
-
-    border: none;
-
-    font-weight: 800;
-
-    text-decoration: none;
-
-    cursor: pointer;
-
-    transition: 0.2s ease;
-}
-
-.primary-btn {
-    background: #ff6b35;
-    color: white;
-
-    box-shadow: 0 8px 20px rgba(255, 107, 53, 0.22);
-}
-
-.primary-btn:hover {
-    transform: translateY(-2px);
-}
-
-.secondary-btn {
-    background: white;
-    color: #333;
-
-    border: 1px solid #ddd;
-}
-
-.secondary-btn:hover {
-    background: #f7f7f7;
-}
+let currentScene = 0;
 
 
 /* =====================================================
-   HERO ART
+   YEAR
 ===================================================== */
 
-.hero-art {
-    min-height: 470px;
+year.textContent = new Date().getFullYear();
 
-    position: relative;
 
-    border-radius: 40px;
+/* =====================================================
+   CHARACTER SELECTION
+===================================================== */
 
-    background:
-        linear-gradient(
-            145deg,
-            #fff1b8,
-            #dff7ff
-        );
+const characterButtons =
+    document.querySelectorAll(".character-option");
 
-    display: flex;
+characterButtons.forEach(button => {
 
-    align-items: center;
-    justify-content: center;
+    button.addEventListener("click", () => {
 
-    overflow: hidden;
-}
+        characterButtons.forEach(btn => {
+            btn.classList.remove("active");
+        });
 
-.sun {
-    position: absolute;
+        button.classList.add("active");
 
-    top: 40px;
-    right: 60px;
+        selectedCharacter =
+            button.dataset.character;
 
-    font-size: 4rem;
-}
+    });
 
-.cloud {
-    position: absolute;
+});
 
-    font-size: 4rem;
-}
 
-.cloud-one {
-    top: 60px;
-    left: 50px;
-}
+/* =====================================================
+   SPLIT STORY INTO SCENES
+===================================================== */
 
-.cloud-two {
-    top: 120px;
-    right: 20px;
-}
+function createScenes(text) {
 
-.character {
-    font-size: 12rem;
+    /*
+       First try paragraphs.
+    */
 
-    filter: drop-shadow(
-        0 20px 20px rgba(0,0,0,0.12)
-    );
+    let parts = text
+        .split(/\n+/)
+        .map(item => item.trim())
+        .filter(Boolean);
 
-    animation: bounce 3s infinite ease-in-out;
-}
 
-@keyframes bounce {
+    /*
+       If there are no paragraphs,
+       split the story into sentences.
+    */
 
-    0%, 100% {
-        transform: translateY(0);
+    if (parts.length <= 1) {
+
+        parts = text
+            .split(/[.!?]+/)
+            .map(item => item.trim())
+            .filter(Boolean);
+
     }
 
-    50% {
-        transform: translateY(-18px);
+
+    /*
+       Limit extremely large stories.
+    */
+
+    return parts.slice(0, 20);
+}
+
+
+/* =====================================================
+   STYLE INFORMATION
+===================================================== */
+
+function getStyleInfo(style) {
+
+    const styles = {
+
+        cartoon: {
+            emoji: "🎨",
+            name: "Cartoon"
+        },
+
+        adventure: {
+            emoji: "🗺️",
+            name: "Adventure"
+        },
+
+        education: {
+            emoji: "📚",
+            name: "Educational"
+        },
+
+        fairytale: {
+            emoji: "🏰",
+            name: "Fairytale"
+        }
+
+    };
+
+    return styles[style] || styles.cartoon;
+}
+
+
+/* =====================================================
+   GENERATE STORY
+===================================================== */
+
+generateBtn.addEventListener("click", () => {
+
+    const title =
+        videoTitle.value.trim();
+
+    const story =
+        storyText.value.trim();
+
+
+    if (!title) {
+
+        alert("Please enter a video title.");
+
+        videoTitle.focus();
+
+        return;
     }
-}
 
-.floating-card {
-    position: absolute;
 
-    padding: 12px 18px;
+    if (!story) {
 
-    background: white;
+        alert("Please write your story first.");
 
-    border-radius: 14px;
+        storyText.focus();
 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        return;
+    }
 
-    font-weight: 800;
-}
 
-.card-one {
-    left: 30px;
-    bottom: 70px;
-}
+    scenes = createScenes(story);
 
-.card-two {
-    right: 30px;
-    bottom: 120px;
+
+    if (scenes.length === 0) {
+
+        alert("Please enter some story text.");
+
+        return;
+    }
+
+
+    currentScene = 0;
+
+
+    previewTitle.textContent = title;
+
+    status.textContent = "Generated";
+
+    status.style.background = "#eaf8ee";
+
+    status.style.color = "#278345";
+
+
+    renderScene();
+
+});
+
+
+/* =====================================================
+   RENDER SCENE
+===================================================== */
+
+function renderScene() {
+
+    if (!scenes.length) {
+
+        storyPreview.innerHTML = `
+            <div class="empty-preview">
+                <div class="empty-icon">🎬</div>
+
+                <h3>Your video preview</h3>
+
+                <p>
+                    Enter a story and click
+                    <strong>Generate Story</strong>.
+                </p>
+            </div>
+        `;
+
+        updateControls();
+
+        return;
+    }
+
+
+    const sceneText =
+        scenes[currentScene];
+
+    const styleInfo =
+        getStyleInfo(videoStyle.value);
+
+
+    const title =
+        videoTitle.value.trim();
+
+
+    storyPreview.innerHTML = `
+
+        <div class="scene">
+
+            <div class="scene-character">
+                ${selectedCharacter}
+            </div>
+
+            <span class="scene-number">
+                SCENE ${currentScene + 1}
+            </span>
+
+            <h3>
+                ${escapeHTML(title)}
+            </h3>
+
+            <p>
+                ${escapeHTML(sceneText)}
+            </p>
+
+            <div class="scene-info">
+
+                <span class="scene-tag">
+                    ${styleInfo.emoji}
+                    ${styleInfo.name}
+                </span>
+
+                <span class="scene-tag">
+                    👧 Age ${ageGroup.value}
+                </span>
+
+                ${
+                    narration.checked
+                    ? `<span class="scene-tag">🎙️ Narration</span>`
+                    : ""
+                }
+
+                ${
+                    music.checked
+                    ? `<span class="scene-tag">🎵 Music</span>`
+                    : ""
+                }
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    updateControls();
+
 }
 
 
 /* =====================================================
-   SECTION HEADINGS
+   UPDATE CONTROLS
 ===================================================== */
 
-.section-heading {
-    text-align: center;
+function updateControls() {
 
-    max-width: 700px;
+    if (!scenes.length) {
 
-    margin: 0 auto 45px;
-}
+        sceneCounter.textContent =
+            "Scene 0 / 0";
 
-.section-heading span {
-    color: #ff6b35;
+        prevBtn.disabled = true;
 
-    font-size: 0.8rem;
+        nextBtn.disabled = true;
 
-    font-weight: 900;
+        return;
+    }
 
-    letter-spacing: 1.5px;
-}
 
-.section-heading h2 {
-    margin-top: 8px;
+    sceneCounter.textContent =
+        `Scene ${currentScene + 1} / ${scenes.length}`;
 
-    font-size: clamp(2rem, 4vw, 3rem);
 
-    line-height: 1.1;
-}
+    prevBtn.disabled =
+        currentScene === 0;
 
-.section-heading p {
-    margin-top: 12px;
 
-    color: #6d737d;
+    nextBtn.disabled =
+        currentScene === scenes.length - 1;
+
 }
 
 
 /* =====================================================
-   FEATURES
+   PREVIOUS SCENE
 ===================================================== */
 
-.features {
-    padding: 90px 7%;
+prevBtn.addEventListener("click", () => {
 
-    background: white;
-}
+    if (currentScene > 0) {
 
-.feature-grid {
-    max-width: 1100px;
+        currentScene--;
 
-    margin: auto;
+        renderScene();
 
-    display: grid;
+    }
 
-    grid-template-columns:
-        repeat(4, 1fr);
-
-    gap: 20px;
-}
-
-.feature-card {
-    padding: 30px;
-
-    border: 1px solid #eee5da;
-
-    border-radius: 20px;
-
-    background: #fffaf4;
-
-    transition: 0.2s;
-}
-
-.feature-card:hover {
-    transform: translateY(-5px);
-
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-}
-
-.feature-icon {
-    font-size: 2.2rem;
-
-    margin-bottom: 15px;
-}
-
-.feature-card h3 {
-    margin-bottom: 8px;
-}
-
-.feature-card p {
-    color: #717680;
-}
+});
 
 
 /* =====================================================
-   CREATOR
+   NEXT SCENE
 ===================================================== */
 
-.creator-section {
-    padding: 100px 6%;
-}
+nextBtn.addEventListener("click", () => {
 
-.creator-layout {
-    max-width: 1250px;
+    if (currentScene < scenes.length - 1) {
 
-    margin: auto;
+        currentScene++;
 
-    display: grid;
+        renderScene();
 
-    grid-template-columns:
-        minmax(300px, 0.9fr)
-        minmax(350px, 1.1fr);
+    }
 
-    gap: 25px;
-}
-
-.creator-panel,
-.preview-panel {
-    background: white;
-
-    border: 1px solid #eee5da;
-
-    border-radius: 24px;
-
-    padding: 28px;
-
-    box-shadow: 0 12px 35px rgba(0,0,0,0.05);
-}
-
-.input-group {
-    margin-bottom: 22px;
-}
-
-.input-group label {
-    display: block;
-
-    margin-bottom: 8px;
-
-    font-weight: 800;
-
-    font-size: 0.9rem;
-}
-
-input,
-textarea,
-select {
-    width: 100%;
-
-    border: 1px solid #ddd6cc;
-
-    border-radius: 12px;
-
-    background: #fffdfa;
-
-    padding: 13px 15px;
-
-    font: inherit;
-
-    color: #222;
-
-    outline: none;
-}
-
-textarea {
-    resize: vertical;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-    border-color: #ff6b35;
-
-    box-shadow:
-        0 0 0 3px rgba(255,107,53,0.1);
-}
-
-.two-columns {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 15px;
-}
+});
 
 
 /* =====================================================
-   CHARACTERS
+   CLEAR PROJECT
 ===================================================== */
 
-.character-options {
-    display: grid;
+clearBtn.addEventListener("click", () => {
 
-    grid-template-columns:
-        repeat(5, 1fr);
+    videoTitle.value = "";
 
-    gap: 8px;
-}
+    storyText.value = "";
 
-.character-option {
-    min-height: 75px;
+    ageGroup.value = "3-5";
 
-    border: 1px solid #e3ddd4;
+    videoStyle.value = "cartoon";
 
-    background: #fffdfa;
+    narration.checked = true;
 
-    border-radius: 12px;
+    music.checked = true;
 
-    cursor: pointer;
+    scenes = [];
 
-    font-size: 1.7rem;
+    currentScene = 0;
 
-    display: flex;
+    selectedCharacter = "🐰";
 
-    flex-direction: column;
 
-    align-items: center;
+    characterButtons.forEach(button => {
 
-    justify-content: center;
+        button.classList.remove("active");
 
-    gap: 2px;
-}
+        if (
+            button.dataset.character === "🐰"
+        ) {
+            button.classList.add("active");
+        }
 
-.character-option span {
-    font-size: 0.68rem;
+    });
 
-    color: #666;
-}
 
-.character-option.active {
-    border-color: #ff6b35;
+    previewTitle.textContent =
+        "Your story will appear here";
 
-    background: #fff0e8;
+    status.textContent = "Ready";
 
-    box-shadow:
-        0 0 0 2px rgba(255,107,53,0.12);
-}
+    status.style.background = "#eaf8ee";
 
+    status.style.color = "#278345";
 
-/* =====================================================
-   OPTIONS
-===================================================== */
 
-.options {
-    display: flex;
+    storyPreview.innerHTML = `
 
-    flex-wrap: wrap;
+        <div class="empty-preview">
 
-    gap: 20px;
+            <div class="empty-icon">🎬</div>
 
-    margin-bottom: 25px;
-}
+            <h3>Your video preview</h3>
 
-.check-row {
-    display: flex;
+            <p>
+                Enter a story and click
+                <strong>Generate Story</strong>.
+            </p>
 
-    align-items: center;
+        </div>
 
-    gap: 8px;
+    `;
 
-    cursor: pointer;
 
-    font-weight: 700;
+    updateControls();
 
-    font-size: 0.9rem;
-}
-
-.check-row input {
-    width: auto;
-}
-
-
-/* =====================================================
-   CREATOR BUTTONS
-===================================================== */
-
-.creator-buttons {
-    display: flex;
-
-    gap: 10px;
-}
-
-.full-btn {
-    flex: 1;
-}
-
-.clear-btn {
-    background: #f1eee9;
-
-    color: #333;
-}
-
-
-/* =====================================================
-   PREVIEW
-===================================================== */
-
-.preview-header {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 15px;
-
-    margin-bottom: 20px;
-}
-
-.preview-header span {
-    color: #ff6b35;
-
-    font-size: 0.7rem;
-
-    font-weight: 900;
-
-    letter-spacing: 1px;
-}
-
-.preview-header h3 {
-    margin-top: 4px;
-}
-
-.preview-status {
-    padding: 7px 11px;
-
-    border-radius: 20px;
-
-    background: #eaf8ee;
-
-    color: #278345;
-
-    font-size: 0.75rem;
-
-    font-weight: 800;
-}
-
-.story-preview {
-    min-height: 430px;
-
-    border-radius: 18px;
-
-    overflow: hidden;
-
-    background:
-        linear-gradient(
-            145deg,
-            #bfeeff,
-            #fff0a8
-        );
-
-    position: relative;
-}
-
-.empty-preview {
-    min-height: 430px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    text-align: center;
-
-    padding: 30px;
-}
-
-.empty-icon {
-    font-size: 4rem;
-
-    margin-bottom: 15px;
-}
-
-.empty-preview p {
-    color: #666;
-}
-
-
-/* GENERATED SCENE */
-
-.scene {
-    min-height: 430px;
-
-    padding: 35px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    text-align: center;
-}
-
-.scene-character {
-    font-size: 8rem;
-
-    margin-bottom: 20px;
-
-    filter: drop-shadow(
-        0 12px 12px rgba(0,0,0,0.12)
-    );
-}
-
-.scene-number {
-    display: inline-block;
-
-    padding: 5px 12px;
-
-    background: rgba(255,255,255,0.7);
-
-    border-radius: 20px;
-
-    font-size: 0.75rem;
-
-    font-weight: 900;
-}
-
-.scene h3 {
-    margin-top: 15px;
-
-    font-size: 1.7rem;
-
-    max-width: 600px;
-}
-
-.scene p {
-    margin-top: 12px;
-
-    max-width: 600px;
-
-    color: #424851;
-
-    font-size: 1.05rem;
-}
-
-.scene-info {
-    margin-top: 25px;
-
-    display: flex;
-
-    gap: 8px;
-
-    flex-wrap: wrap;
-
-    justify-content: center;
-}
-
-.scene-tag {
-    padding: 7px 12px;
-
-    background: rgba(255,255,255,0.7);
-
-    border-radius: 20px;
-
-    font-size: 0.75rem;
-
-    font-weight: 700;
-}
-
-
-/* =====================================================
-   PREVIEW CONTROLS
-===================================================== */
-
-.preview-controls {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 10px;
-
-    margin-top: 18px;
-}
-
-.preview-controls button {
-    border: 1px solid #ddd6cc;
-
-    background: white;
-
-    border-radius: 10px;
-
-    padding: 9px 14px;
-
-    cursor: pointer;
-
-    font-weight: 700;
-}
-
-.preview-controls button:not(:disabled):hover {
-    border-color: #ff6b35;
-}
-
-.preview-controls button:disabled {
-    opacity: 0.45;
-
-    cursor: not-allowed;
-}
-
-#sceneCounter {
-    font-weight: 800;
-
-    font-size: 0.85rem;
-}
-
-
-/* =====================================================
-   HOW IT WORKS
-===================================================== */
-
-.how-section {
-    padding: 100px 7%;
-
-    background: white;
-}
-
-.steps {
-    max-width: 1000px;
-
-    margin: auto;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 30px;
-}
-
-.step {
-    text-align: center;
-
-    padding: 25px;
-}
-
-.step-number {
-    width: 55px;
-    height: 55px;
-
-    margin: 0 auto 20px;
-
-    border-radius: 50%;
-
-    background: #ff6b35;
-
-    color: white;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    font-weight: 900;
-
-    font-size: 1.2rem;
-}
-
-.step p {
-    margin-top: 8px;
-
-    color: #70757d;
-}
-
-
-/* =====================================================
-   FOOTER
-===================================================== */
-
-footer {
-    padding: 50px 7%;
-
-    text-align: center;
-
-    background: #20242b;
-
-    color: white;
-}
-
-.footer-logo {
-    font-size: 1.3rem;
-
-    font-weight: 900;
-}
-
-footer p {
-    color: #b9bec6;
-
-    margin-top: 10px;
-}
-
-.footer-links {
-    display: flex;
-
-    justify-content: center;
-
-    gap: 20px;
-
-    margin-top: 20px;
-}
-
-.footer-links a {
-    color: white;
-
-    text-decoration: none;
-}
-
-.copyright {
-    margin-top: 30px;
-
-    font-size: 0.8rem;
-}
+});
 
 
 /* =====================================================
    DARK MODE
 ===================================================== */
 
-body.dark {
-    background: #14171b;
+themeBtn.addEventListener("click", () => {
 
-    color: #f2f3f5;
-}
+    document.body.classList.toggle("dark");
 
-body.dark .topbar,
-body.dark .features,
-body.dark .creator-panel,
-body.dark .preview-panel,
-body.dark .how-section {
-    background: #1c2025;
 
-    border-color: #30353c;
-}
+    if (
+        document.body.classList.contains("dark")
+    ) {
 
-body.dark .topbar nav a {
-    color: #ddd;
-}
+        themeBtn.textContent = "☀️";
 
-body.dark .feature-card,
-body.dark input,
-body.dark textarea,
-body.dark select,
-body.dark .character-option {
-    background: #171a1f;
+        localStorage.setItem(
+            "kidstory-theme",
+            "dark"
+        );
 
-    color: #eee;
+    } else {
 
-    border-color: #353b43;
-}
+        themeBtn.textContent = "🌙";
 
-body.dark .secondary-btn,
-body.dark .preview-controls button {
-    background: #1c2025;
+        localStorage.setItem(
+            "kidstory-theme",
+            "light"
+        );
 
-    color: white;
+    }
 
-    border-color: #3a4048;
-}
+});
 
-body.dark .clear-btn {
-    background: #30353c;
 
-    color: white;
-}
+/* =====================================================
+   LOAD SAVED THEME
+===================================================== */
 
-body.dark .section-heading p,
-body.dark .feature-card p,
-body.dark .step p,
-body.dark .hero p {
-    color: #b9bec6;
-}
+const savedTheme =
+    localStorage.getItem("kidstory-theme");
 
-body.dark .theme-btn {
-    background: #1c2025;
 
-    color: white;
+if (savedTheme === "dark") {
 
-    border-color: #3a4048;
+    document.body.classList.add("dark");
+
+    themeBtn.textContent = "☀️";
+
 }
 
 
 /* =====================================================
-   MOBILE
+   ESCAPE HTML
 ===================================================== */
 
-@media (max-width: 900px) {
+function escapeHTML(text) {
 
-    .hero {
-        grid-template-columns: 1fr;
+    const div =
+        document.createElement("div");
 
-        padding-top: 55px;
-    }
+    div.textContent = text;
 
-    .hero-art {
-        min-height: 350px;
-    }
+    return div.innerHTML;
 
-    .feature-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
-    .creator-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .steps {
-        grid-template-columns: 1fr;
-    }
 }
 
 
-@media (max-width: 600px) {
+/* =====================================================
+   KEYBOARD CONTROLS
+===================================================== */
 
-    .topbar {
-        padding: 12px 5%;
+document.addEventListener("keydown", event => {
 
-        min-height: 65px;
+    if (!scenes.length) return;
+
+
+    if (event.key === "ArrowLeft") {
+
+        if (currentScene > 0) {
+
+            currentScene--;
+
+            renderScene();
+
+        }
+
     }
 
-    .topbar nav {
-        display: none;
+
+    if (event.key === "ArrowRight") {
+
+        if (currentScene < scenes.length - 1) {
+
+            currentScene++;
+
+            renderScene();
+
+        }
+
     }
 
-    .hero {
-        padding: 45px 5%;
+});
 
-        gap: 35px;
-    }
 
-    .hero h1 {
-        font-size: 2.5rem;
-    }
+/* =====================================================
+   DEMO STORY
+===================================================== */
 
-    .hero-buttons {
-        flex-direction: column;
-    }
+storyText.placeholder =
+`Once upon a time, a little rabbit named Ruby lived near a beautiful forest.
 
-    .hero-art {
-        min-height: 300px;
+One morning, Ruby discovered a tiny bird that was lost.
 
-        border-radius: 25px;
-    }
+Ruby decided to help the bird find its family.
 
-    .character {
-        font-size: 8rem;
-    }
+Together they walked through the forest.
 
-    .feature-grid {
-        grid-template-columns: 1fr;
-    }
+At sunset, they found the bird's family.
 
-    .creator-section,
-    .features,
-    .how-section {
-        padding: 70px 5%;
-    }
-
-    .creator-panel,
-    .preview-panel {
-        padding: 18px;
-
-        border-radius: 18px;
-    }
-
-    .two-columns {
-        grid-template-columns: 1fr;
-    }
-
-    .character-options {
-        grid-template-columns:
-            repeat(3, 1fr);
-    }
-
-    .options {
-        flex-direction: column;
-
-        gap: 10px;
-    }
-
-    .creator-buttons {
-        flex-direction: column;
-    }
-
-    .story-preview,
-    .empty-preview,
-    .scene {
-        min-height: 350px;
-    }
-
-    .scene-character {
-        font-size: 6rem;
-    }
-
-    .preview-controls {
-        flex-wrap: wrap;
-    }
-}
+Ruby learned that helping others can make everyone happy.`;
 ```
