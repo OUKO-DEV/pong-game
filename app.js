@@ -1,428 +1,472 @@
-const canvas = document.getElementById("pongCanvas");
-const ctx = canvas.getContext("2d");
 
-const playerScoreElement = document.getElementById("playerScore");
-const computerScoreElement = document.getElementById("computerScore");
+/* ==========================================
+   CELINE'S WORLD — APP.JS
+   Made with love by Emmanuel 💗
+========================================== */
 
-const startBtn = document.getElementById("startBtn");
-const restartBtn = document.getElementById("restartBtn");
+"use strict";
 
-const upBtn = document.getElementById("upBtn");
-const downBtn = document.getElementById("downBtn");
+document.addEventListener("DOMContentLoaded", () => {
+  // ----------------------------------------
+  // 1. Floating hearts
+  // ----------------------------------------
 
-const WIDTH = canvas.width;
-const HEIGHT = canvas.height;
+  const heartsContainer = document.getElementById("floatingHearts");
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
 
-const WINNING_SCORE = 10;
+  const heartSymbols = ["♥", "♡", "❤", "💕", "✦"];
 
-// Player
-const player = {
-  x: 20,
-  y: HEIGHT / 2 - 50,
-  width: 15,
-  height: 100,
-  speed: 7
-};
+  function createHeart() {
+    if (!heartsContainer || reducedMotion) return;
 
-// Computer
-const computer = {
-  x: WIDTH - 35,
-  y: HEIGHT / 2 - 50,
-  width: 15,
-  height: 100,
-  speed: 5
-};
+    const heart = document.createElement("span");
+    heart.className = "floating-heart";
+    heart.setAttribute("aria-hidden", "true");
 
-// Ball
-const ball = {
-  x: WIDTH / 2,
-  y: HEIGHT / 2,
-  radius: 9,
-  speedX: 5,
-  speedY: 4
-};
+    heart.textContent =
+      heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
 
-let playerScore = 0;
-let computerScore = 0;
+    heart.style.left = `${Math.random() * 100}%`;
+    heart.style.fontSize = `${12 + Math.random() * 17}px`;
+    heart.style.setProperty("--duration", `${7 + Math.random() * 6}s`);
+    heart.style.setProperty(
+      "--drift",
+      `${Math.round(Math.random() * 120 - 60)}px`
+    );
 
-let gameRunning = false;
-let animationId = null;
+    heartsContainer.appendChild(heart);
 
-let moveUp = false;
-let moveDown = false;
+    window.setTimeout(() => {
+      heart.remove();
+    }, 14000);
+  }
 
-// Draw rectangle
-function drawRect(x, y, width, height) {
-  ctx.fillStyle = "white";
-  ctx.fillRect(x, y, width, height);
-}
+  if (!reducedMotion) {
+    for (let i = 0; i < 8; i++) {
+      window.setTimeout(createHeart, i * 350);
+    }
 
-// Draw ball
-function drawBall() {
-  ctx.beginPath();
-  ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-  ctx.fillStyle = "white";
-  ctx.fill();
-  ctx.closePath();
-}
+    window.setInterval(createHeart, 1100);
+  }
 
-// Draw center line
-function drawCenterLine() {
-  ctx.strokeStyle = "#444";
-  ctx.lineWidth = 2;
-  ctx.setLineDash([10, 10]);
+  // ----------------------------------------
+  // 2. Background music
+  // ----------------------------------------
 
-  ctx.beginPath();
-  ctx.moveTo(WIDTH / 2, 0);
-  ctx.lineTo(WIDTH / 2, HEIGHT);
-  ctx.stroke();
+  const music = document.getElementById("backgroundMusic");
+  const musicButton = document.getElementById("musicButton");
+  const musicIcon = document.getElementById("musicIcon");
+  const musicLabel = document.getElementById("musicLabel");
 
-  ctx.setLineDash([]);
-}
+  let musicStarted = false;
 
-// Draw game
-function drawGame() {
-  ctx.clearRect(0, 0, WIDTH, HEIGHT);
+  function updateMusicButton(isPlaying) {
+    musicButton.classList.toggle("is-playing", isPlaying);
+    musicButton.setAttribute("aria-pressed", String(isPlaying));
+    musicButton.setAttribute(
+      "aria-label",
+      isPlaying ? "Pause background music" : "Play background music"
+    );
 
-  drawCenterLine();
+    musicIcon.textContent = isPlaying ? "♫" : "♪";
+    musicLabel.textContent = isPlaying ? "Pause our vibe" : "Play our vibe";
+  }
 
-  drawRect(
-    player.x,
-    player.y,
-    player.width,
-    player.height
+  musicButton.addEventListener("click", async () => {
+    if (!music) return;
+
+    if (!musicStarted) {
+      musicStarted = true;
+      music.volume = 0.35;
+    }
+
+    if (music.paused) {
+      try {
+        await music.play();
+        updateMusicButton(true);
+      } catch (error) {
+        updateMusicButton(false);
+        musicLabel.textContent = "Add music.mp3";
+        console.warn(
+          "Music could not play. Check that music.mp3 exists and is a valid audio file.",
+          error
+        );
+      }
+    } else {
+      music.pause();
+      updateMusicButton(false);
+    }
+  });
+
+  music.addEventListener("play", () => updateMusicButton(true));
+  music.addEventListener("pause", () => updateMusicButton(false));
+  music.addEventListener("ended", () => updateMusicButton(false));
+
+  music.addEventListener("error", () => {
+    if (musicStarted) {
+      updateMusicButton(false);
+      musicLabel.textContent = "Music unavailable";
+    }
+  });
+
+  // ----------------------------------------
+  // 3. Surprise button
+  // ----------------------------------------
+
+  const surpriseButton = document.getElementById("surpriseButton");
+  const surpriseResult = document.getElementById("surpriseResult");
+  const surpriseIllustration = document.getElementById(
+    "surpriseIllustration"
   );
+  const surpriseHint = document.getElementById("surpriseHint");
+  const anotherSurprise = document.getElementById("anotherSurprise");
 
-  drawRect(
-    computer.x,
-    computer.y,
-    computer.width,
-    computer.height
-  );
+  const sweetMessages = [
+    {
+      emoji: "💖",
+      title: "You make this world sweeter!",
+      message:
+        "Celine, keep smiling, keep shining, and keep being the wonderful person you are. Your bestie Emmanuel is cheering for you! 🥹💕"
+    },
+    {
+      emoji: "🌷",
+      title: "A little reminder for you",
+      message:
+        "You are one of a kind, Celine. Be proud of how far you've come and excited about all the beautiful things still ahead. 💗"
+    },
+    {
+      emoji: "🫶🏽",
+      title: "Bestie appreciation moment!",
+      message:
+        "Some people make life brighter just by being themselves. Thank you for being you, Celine. Sending you a big virtual hug! 🤗"
+    },
+    {
+      emoji: "✨",
+      title: "Your smile deserves to stay!",
+      message:
+        "Whatever today brings, remember that you are worthy of happiness, kindness, and beautiful new beginnings. Keep glowing, bestie! 💕"
+    },
+    {
+      emoji: "🎀",
+      title: "A gift with no wrapping paper",
+      message:
+        "If this website could give you one thing, it would be a pocket full of happiness for every day. Stay amazing, Celine! 💗"
+    }
+  ];
 
-  drawBall();
-}
+  let lastMessageIndex = -1;
 
-// Move player
-function movePlayer() {
+  function showSweetMessage() {
+    let index;
 
-  if (moveUp) {
-    player.y -= player.speed;
-  }
+    do {
+      index = Math.floor(Math.random() * sweetMessages.length);
+    } while (
+      sweetMessages.length > 1 &&
+      index === lastMessageIndex
+    );
 
-  if (moveDown) {
-    player.y += player.speed;
-  }
+    lastMessageIndex = index;
+    const item = sweetMessages[index];
 
-  // Keep player inside canvas
-  if (player.y < 0) {
-    player.y = 0;
-  }
+    surpriseResult.querySelector(".surprise-result-icon").textContent =
+      item.emoji;
+    surpriseResult.querySelector("h3").textContent = item.title;
+    surpriseResult.querySelector("p").textContent = item.message;
 
-  if (player.y + player.height > HEIGHT) {
-    player.y = HEIGHT - player.height;
-  }
-}
+    surpriseResult.hidden = false;
+    surpriseIllustration.textContent = item.emoji;
+    surpriseHint.textContent = "Here's a little happiness for you! 💌";
 
-// Move computer
-function moveComputer() {
+    surpriseButton.textContent = "Surprise opened! 💗";
+    surpriseButton.setAttribute("aria-expanded", "true");
 
-  const computerCenter =
-    computer.y + computer.height / 2;
-
-  if (computerCenter < ball.y - 10) {
-    computer.y += computer.speed;
-  }
-
-  if (computerCenter > ball.y + 10) {
-    computer.y -= computer.speed;
-  }
-
-  if (computer.y < 0) {
-    computer.y = 0;
-  }
-
-  if (computer.y + computer.height > HEIGHT) {
-    computer.y = HEIGHT - computer.height;
-  }
-}
-
-// Reset ball
-function resetBall(direction) {
-
-  ball.x = WIDTH / 2;
-  ball.y = HEIGHT / 2;
-
-  ball.speedX = 5 * direction;
-
-  ball.speedY =
-    (Math.random() > 0.5 ? 1 : -1) *
-    (3 + Math.random() * 2);
-}
-
-// Ball collision with paddles
-function paddleCollision(paddle) {
-
-  return (
-    ball.x - ball.radius < paddle.x + paddle.width &&
-    ball.x + ball.radius > paddle.x &&
-    ball.y - ball.radius < paddle.y + paddle.height &&
-    ball.y + ball.radius > paddle.y
-  );
-}
-
-// Move ball
-function moveBall() {
-
-  ball.x += ball.speedX;
-  ball.y += ball.speedY;
-
-  // Top wall
-  if (ball.y - ball.radius <= 0) {
-    ball.y = ball.radius;
-    ball.speedY *= -1;
-  }
-
-  // Bottom wall
-  if (ball.y + ball.radius >= HEIGHT) {
-    ball.y = HEIGHT - ball.radius;
-    ball.speedY *= -1;
-  }
-
-  // Player paddle collision
-  if (paddleCollision(player) && ball.speedX < 0) {
-
-    ball.x = player.x + player.width + ball.radius;
-
-    ball.speedX *= -1;
-
-    const hitPosition =
-      (ball.y - (player.y + player.height / 2)) /
-      (player.height / 2);
-
-    ball.speedY = hitPosition * 6;
-
-    increaseSpeed();
-  }
-
-  // Computer paddle collision
-  if (paddleCollision(computer) && ball.speedX > 0) {
-
-    ball.x = computer.x - ball.radius;
-
-    ball.speedX *= -1;
-
-    const hitPosition =
-      (ball.y - (computer.y + computer.height / 2)) /
-      (computer.height / 2);
-
-    ball.speedY = hitPosition * 6;
-
-    increaseSpeed();
-  }
-
-  // Ball goes past player
-  if (ball.x + ball.radius < 0) {
-
-    computerScore++;
-
-    updateScore();
-
-    checkWinner();
-
-    if (gameRunning) {
-      resetBall(1);
+    if (!reducedMotion) {
+      for (let i = 0; i < 9; i++) {
+        window.setTimeout(createHeart, i * 90);
+      }
     }
   }
 
-  // Ball goes past computer
-  if (ball.x - ball.radius > WIDTH) {
+  surpriseButton.addEventListener("click", showSweetMessage);
+  anotherSurprise.addEventListener("click", showSweetMessage);
 
-    playerScore++;
+  // ----------------------------------------
+  // 4. Click-to-open friendship letter
+  // ----------------------------------------
 
-    updateScore();
+  const letterButton = document.getElementById("letterButton");
+  const letterContent = document.getElementById("letterContent");
+  const letterInstruction = document.getElementById("letterInstruction");
 
-    checkWinner();
+  letterButton.addEventListener("click", () => {
+    const isOpen = letterButton.getAttribute("aria-expanded") === "true";
+    const shouldOpen = !isOpen;
 
-    if (gameRunning) {
-      resetBall(-1);
+    letterButton.setAttribute("aria-expanded", String(shouldOpen));
+    letterContent.hidden = !shouldOpen;
+
+    letterInstruction.textContent = shouldOpen
+      ? "Your letter is open 💌"
+      : "Tap to open your letter ✉️";
+
+    if (shouldOpen) {
+      letterButton.querySelector(".envelope-heart").textContent = "💗";
+      letterContent.scrollIntoView({
+        behavior: reducedMotion ? "auto" : "smooth",
+        block: "nearest"
+      });
+    } else {
+      letterButton.querySelector(".envelope-heart").textContent = "♥";
     }
+  });
+
+  // ----------------------------------------
+  // 5. Friendship quiz
+  // ----------------------------------------
+
+  // These questions use the website itself rather than assuming
+  // personal facts about Celine or Emmanuel.
+
+  const quizQuestions = [
+    {
+      question: "Who made this little website for Celine?",
+      options: [
+        "Her favourite singer",
+        "Emmanuel",
+        "A random stranger",
+        "A friendly robot"
+      ],
+      answer: 1,
+      correct: "That's right! Emmanuel made this little world for you. 💗",
+      incorrect: "It was Emmanuel! He made this website especially for you."
+    },
+    {
+      question: "What is the main purpose of this website?",
+      options: [
+        "To sell shoes",
+        "To teach mathematics",
+        "To celebrate friendship",
+        "To book flights"
+      ],
+      answer: 2,
+      correct: "Exactly! It's a little celebration of your friendship. 🫶🏽",
+      incorrect: "It's all about celebrating friendship and making you smile!"
+    },
+    {
+      question: "What can you open by clicking on the envelope?",
+      options: [
+        "A secret letter",
+        "A shopping cart",
+        "A weather report",
+        "A calculator"
+      ],
+      answer: 0,
+      correct: "Yes! A sweet friendship letter is waiting inside. 💌",
+      incorrect: "A sweet friendship letter! You can open and close it."
+    },
+    {
+      question: "What's the best way to be a wonderful bestie?",
+      options: [
+        "Never listen",
+        "Always compete",
+        "Be kind, honest and supportive",
+        "Ignore every message"
+      ],
+      answer: 2,
+      correct: "Absolutely! Kindness, honesty and support matter. 💕",
+      incorrect: "Being kind, honest and supportive is always a lovely start!"
+    }
+  ];
+
+  const quizProgress = document.getElementById("quizProgress");
+  const quizProgressFill = document.getElementById("quizProgressFill");
+  const quizQuestion = document.getElementById("quizQuestion");
+  const quizOptions = document.getElementById("quizOptions");
+  const quizFeedback = document.getElementById("quizFeedback");
+  const quizNext = document.getElementById("quizNext");
+  const quizQuestionArea = document.getElementById("quizQuestionArea");
+  const quizResult = document.getElementById("quizResult");
+  const quizResultEmoji = document.getElementById("quizResultEmoji");
+  const quizResultTitle = document.getElementById("quizResultTitle");
+  const quizResultText = document.getElementById("quizResultText");
+  const restartQuiz = document.getElementById("restartQuiz");
+
+  let currentQuestion = 0;
+  let score = 0;
+  let answered = false;
+
+  function renderQuestion() {
+    const item = quizQuestions[currentQuestion];
+    answered = false;
+
+    quizProgress.textContent =
+      `QUESTION ${currentQuestion + 1} OF ${quizQuestions.length}`;
+
+    quizProgressFill.style.width =
+      `${((currentQuestion + 1) / quizQuestions.length) * 100}%`;
+
+    quizQuestion.textContent = item.question;
+    quizOptions.replaceChildren();
+    quizFeedback.textContent = "";
+    quizNext.disabled = true;
+
+    quizNext.textContent =
+      currentQuestion === quizQuestions.length - 1
+        ? "See my results 💗"
+        : "Next question →";
+
+    item.options.forEach((option, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "quiz-option";
+
+      const letter = document.createElement("span");
+      letter.className = "option-letter";
+      letter.textContent = String.fromCharCode(65 + index);
+
+      const label = document.createElement("span");
+      label.textContent = option;
+
+      button.append(letter, label);
+      button.addEventListener("click", () => selectAnswer(index));
+
+      quizOptions.appendChild(button);
+    });
   }
-}
 
-// Increase ball speed
-function increaseSpeed() {
+  function selectAnswer(selectedIndex) {
+    if (answered) return;
+    answered = true;
 
-  const maxSpeed = 12;
+    const item = quizQuestions[currentQuestion];
+    const buttons = quizOptions.querySelectorAll(".quiz-option");
+    const isCorrect = selectedIndex === item.answer;
 
-  if (Math.abs(ball.speedX) < maxSpeed) {
-    ball.speedX *= 1.08;
+    buttons.forEach((button, index) => {
+      button.disabled = true;
+
+      if (index === item.answer) {
+        button.classList.add("correct");
+      }
+
+      if (index === selectedIndex && !isCorrect) {
+        button.classList.add("incorrect");
+      }
+
+      if (index === selectedIndex) {
+        button.classList.add("selected");
+      }
+    });
+
+    if (isCorrect) {
+      score++;
+      quizFeedback.textContent = item.correct;
+    } else {
+      quizFeedback.textContent = item.incorrect;
+    }
+
+    quizNext.disabled = false;
   }
 
-  if (Math.abs(ball.speedY) < maxSpeed) {
-    ball.speedY *= 1.05;
-  }
-}
+  function showQuizResult() {
+    quizQuestionArea.hidden = true;
+    quizResult.hidden = false;
 
-// Update score
-function updateScore() {
+    quizProgress.textContent = "QUIZ COMPLETE!";
+    quizProgressFill.style.width = "100%";
 
-  playerScoreElement.textContent = playerScore;
-  computerScoreElement.textContent = computerScore;
-}
+    quizResultEmoji.textContent =
+      score === quizQuestions.length
+        ? "🏆"
+        : score >= 2
+          ? "💖"
+          : "🌷";
 
-// Check winner
-function checkWinner() {
+    quizResultTitle.textContent =
+      score === quizQuestions.length
+        ? "Friendship superstar!"
+        : score >= 2
+          ? "Lovely effort, bestie!"
+          : "There's more to discover!";
 
-  if (playerScore >= WINNING_SCORE) {
-
-    gameRunning = false;
-
-    alert("🏆 YOU WIN!");
-
-    startBtn.textContent = "▶️ START";
-  }
-
-  if (computerScore >= WINNING_SCORE) {
-
-    gameRunning = false;
-
-    alert("🤖 COMPUTER WINS!");
-
-    startBtn.textContent = "▶️ START";
-  }
-}
-
-// Game loop
-function gameLoop() {
-
-  if (!gameRunning) {
-    return;
+    quizResultText.textContent =
+      `You got ${score} out of ${quizQuestions.length} correct! ` +
+      (
+        score === quizQuestions.length
+          ? "Perfect score! You know your way around Celine's little world. 💕"
+          : "Keep exploring the website and enjoy all the little surprises! 💗"
+      );
   }
 
-  movePlayer();
-  moveComputer();
-  moveBall();
-  drawGame();
+  quizNext.addEventListener("click", () => {
+    if (!answered) return;
 
-  animationId = requestAnimationFrame(gameLoop);
-}
+    if (currentQuestion < quizQuestions.length - 1) {
+      currentQuestion++;
+      renderQuestion();
+    } else {
+      showQuizResult();
+    }
+  });
 
-// Start game
-function startGame() {
+  restartQuiz.addEventListener("click", () => {
+    currentQuestion = 0;
+    score = 0;
+    answered = false;
 
-  if (gameRunning) {
-    return;
-  }
+    quizResult.hidden = true;
+    quizQuestionArea.hidden = false;
 
-  gameRunning = true;
+    renderQuestion();
 
-  startBtn.textContent = "⏸️ PLAYING";
+    document.getElementById("quizCard").scrollIntoView({
+      behavior: reducedMotion ? "auto" : "smooth",
+      block: "center"
+    });
+  });
 
-  gameLoop();
-}
+  renderQuestion();
 
-// Restart game
-function restartGame() {
+  // ----------------------------------------
+  // 6. Scroll reveal animations
+  // ----------------------------------------
 
-  cancelAnimationFrame(animationId);
-
-  playerScore = 0;
-  computerScore = 0;
-
-  player.y = HEIGHT / 2 - player.height / 2;
-  computer.y = HEIGHT / 2 - computer.height / 2;
-
-  resetBall(
-    Math.random() > 0.5 ? 1 : -1
+  const revealElements = document.querySelectorAll(
+    ".section-heading, .reminder-card, .message-panel, " +
+    ".surprise-box, .letter-envelope, .quiz-card, .final-heart"
   );
 
-  updateScore();
+  if (!reducedMotion && "IntersectionObserver" in window) {
+    document.body.classList.add("js-ready");
 
-  gameRunning = true;
+    revealElements.forEach(element => {
+      element.classList.add("reveal");
+    });
 
-  startBtn.textContent = "⏸️ PLAYING";
+    const revealObserver = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
 
-  gameLoop();
-}
-
-// Keyboard controls
-document.addEventListener("keydown", function(event) {
-
-  if (event.key === "ArrowUp") {
-    moveUp = true;
-    event.preventDefault();
+    revealElements.forEach(element => {
+      revealObserver.observe(element);
+    });
   }
 
-  if (event.key === "ArrowDown") {
-    moveDown = true;
-    event.preventDefault();
-  }
+  // ----------------------------------------
+  // 7. Footer year is not hardcoded:
+  // keep the website simple and ready to use.
+  // ----------------------------------------
 
-  if (event.code === "Space") {
-    startGame();
-  }
+  console.log("💗 Celine's World is ready. Made with care by Emmanuel!");
 });
-
-document.addEventListener("keyup", function(event) {
-
-  if (event.key === "ArrowUp") {
-    moveUp = false;
-  }
-
-  if (event.key === "ArrowDown") {
-    moveDown = false;
-  }
-});
-
-// Mobile UP button
-upBtn.addEventListener("mousedown", () => {
-  moveUp = true;
-});
-
-upBtn.addEventListener("mouseup", () => {
-  moveUp = false;
-});
-
-upBtn.addEventListener("mouseleave", () => {
-  moveUp = false;
-});
-
-upBtn.addEventListener("touchstart", (event) => {
-  event.preventDefault();
-  moveUp = true;
-});
-
-upBtn.addEventListener("touchend", () => {
-  moveUp = false;
-});
-
-// Mobile DOWN button
-downBtn.addEventListener("mousedown", () => {
-  moveDown = true;
-});
-
-downBtn.addEventListener("mouseup", () => {
-  moveDown = false;
-});
-
-downBtn.addEventListener("mouseleave", () => {
-  moveDown = false;
-});
-
-downBtn.addEventListener("touchstart", (event) => {
-  event.preventDefault();
-  moveDown = true;
-});
-
-downBtn.addEventListener("touchend", () => {
-  moveDown = false;
-});
-
-// Buttons
-startBtn.addEventListener("click", startGame);
-
-restartBtn.addEventListener("click", restartGame);
-
-// Initial screen
-drawGame();
