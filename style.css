@@ -1,65 +1,102 @@
 ```css
-/* Visible floating love emojis */
-.hearts-background {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 10;
+/* =====================================================
+   CELINE'S ROMANTIC WEBSITE
+   Created with love by Emmanuel 💗
+   Complete responsive stylesheet
+===================================================== */
+
+/* ---------- 1. GLOBAL SETTINGS ---------- */
+
+:root {
+  --pink: #ff39a8;
+  --hot-pink: #f51b91;
+  --soft-pink: #ffb7df;
+  --light-pink: #fff0fa;
+  --purple: #a34bea;
+  --deep-purple: #64258d;
+  --lavender: #ead9ff;
+  --text: #542d64;
+  --muted: #86638f;
+  --white: #ffffff;
+  --border: rgba(211, 110, 202, 0.25);
+  --glass: rgba(255, 255, 255, 0.78);
+  --shadow: 0 15px 45px rgba(154, 60, 158, 0.13);
+  --radius: 25px;
 }
 
-.floating-heart {
-  position: absolute;
-  bottom: -60px;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: "Nunito", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(
+      circle at 5% 12%,
+      rgba(255, 183, 226, 0.45),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 95% 32%,
+      rgba(202, 166, 255, 0.4),
+      transparent 30%
+    ),
+    linear-gradient(
+      145deg,
+      #fffaff 0%,
+      #fff0f9 48%,
+      #f6efff 100%
+    );
+}
+
+body,
+button,
+input,
+textarea {
+  font-family: "Nunito", sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #a64ce5;
+  outline-offset: 4px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+::selection {
+  color: white;
+  background: #e94bad;
+}
+
+img {
   display: block;
-  opacity: 0;
-  line-height: 1;
-  user-select: none;
-  will-change: transform, opacity;
-  animation: floatUp 8s linear forwards;
-}
-
-@keyframes floatUp {
-  0% {
-    transform: translateY(0) rotate(0deg) scale(0.7);
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 0.75;
-  }
-
-  50% {
-    transform: translateY(-55vh) translateX(35px) rotate(18deg) scale(1);
-    opacity: 0.8;
-  }
-
-  90% {
-    opacity: 0.65;
-  }
-
-  100% {
-    transform: translateY(-115vh) translateX(-20px) rotate(-20deg) scale(0.8);
-    opacity: 0;
-  }
-}
-
-/* Keep the surprise message animation visible */
-.surprise-pop {
-  animation: surprisePop 0.45s ease both;
-}
-
-@keyframes surprisePop {
-  from {
-    opacity: 0;
-    transform: translateY(12px) scale(0.97);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-```
+  max-width: 100
