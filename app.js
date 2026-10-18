@@ -1,203 +1,194 @@
 ```javascript
-/* ==========================================
-   CELINE'S LOVE WEBSITE
-   Created by Emmanuel 💗
-========================================== */
+document.addEventListener("DOMContentLoaded", function () {
+  // =====================================
+  // 1. FLOATING HEARTS AND LOVE EMOJIS 💗
+  // =====================================
 
-document.addEventListener("DOMContentLoaded", () => {
-  // ELEMENTS
-  const heartsBackground = document.getElementById("heartsBackground");
+  let heartsContainer = document.getElementById("heartsBackground");
+
+  if (!heartsContainer) {
+    heartsContainer = document.createElement("div");
+    heartsContainer.id = "heartsBackground";
+    heartsContainer.className = "hearts-background";
+    heartsContainer.setAttribute("aria-hidden", "true");
+    document.body.prepend(heartsContainer);
+  }
+
+  const heartSymbols = [
+    "💗", "💖", "💕", "💘", "💝",
+    "💜", "❤️", "♥", "♡", "🌸", "🦋"
+  ];
+
+  function createFloatingHeart() {
+    const heart = document.createElement("span");
+
+    heart.className = "floating-heart";
+    heart.textContent =
+      heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (18 + Math.random() * 24) + "px";
+    heart.style.animationDuration = (6 + Math.random() * 5) + "s";
+    heart.style.color = [
+      "#ff35a8", "#ed65c9", "#b967f4", "#ff8bc9"
+    ][Math.floor(Math.random() * 4)];
+
+    heartsContainer.appendChild(heart);
+
+    heart.addEventListener("animationend", function () {
+      heart.remove();
+    }, { once: true });
+  }
+
+  // Show hearts immediately, then continuously.
+  for (let i = 0; i < 18; i++) {
+    setTimeout(createFloatingHeart, i * 180);
+  }
+
+  setInterval(createFloatingHeart, 450);
+
+  // =====================================
+  // 2. MOBILE NAVIGATION
+  // =====================================
+
   const menuToggle = document.getElementById("menuToggle");
   const navigation = document.getElementById("navigation");
+
+  if (menuToggle && navigation) {
+    menuToggle.addEventListener("click", function () {
+      navigation.classList.toggle("open");
+
+      const open = navigation.classList.contains("open");
+      menuToggle.textContent = open ? "✕" : "☰";
+      menuToggle.setAttribute("aria-expanded", String(open));
+    });
+
+    navigation.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        navigation.classList.remove("open");
+        menuToggle.textContent = "☰";
+        menuToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+
+  // =====================================
+  // 3. OPEN AND CLOSE THE LOVE LETTER 💌
+  // =====================================
 
   const openLetter = document.getElementById("openLetter");
   const closeLetter = document.getElementById("closeLetter");
   const letterPaper = document.getElementById("letterPaper");
 
-  const surpriseButton = document.getElementById("surpriseButton");
-  const surpriseMessage = document.getElementById("surpriseMessage");
+  function openLoveLetter() {
+    if (!letterPaper) {
+      alert("Please check that the letterPaper section exists in index.html.");
+      return;
+    }
 
-  const yesButton = document.getElementById("yesButton");
-  const slowButton = document.getElementById("slowButton");
-  const answerResult = document.getElementById("answerResult");
+    letterPaper.hidden = false;
 
-  // FLOATING HEARTS
-  // Hearts rise continuously from the bottom of the screen.
-  function createHeart() {
-    if (!heartsBackground) return;
-
-    // Keep the number of simultaneous hearts reasonable.
-    if (heartsBackground.childElementCount >= 35) return;
-
-    const heart = document.createElement("span");
-    const symbols = ["♥", "♡", "💗", "💕", "💖", "💜"];
-    const colors = [
-      "#ff45ad",
-      "#f78bd3",
-      "#b65ae8",
-      "#ff78bd",
-      "#d28cff"
-    ];
-
-    heart.className = "floating-heart";
-    heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-
-    heart.style.setProperty("--left", `${Math.random() * 100}%`);
-    heart.style.setProperty(
-      "--heart-size",
-      `${14 + Math.random() * 25}px`
-    );
-    heart.style.setProperty(
-      "--duration",
-      `${7 + Math.random() * 7}s`
-    );
-    heart.style.setProperty(
-      "--drift",
-      `${Math.round(Math.random() * 120 - 60)}px`
-    );
-    heart.style.setProperty(
-      "--heart-color",
-      colors[Math.floor(Math.random() * colors.length)]
-    );
-    heart.style.setProperty(
-      "--heart-opacity",
-      `${0.25 + Math.random() * 0.45}`
-    );
-
-    heartsBackground.appendChild(heart);
-
-    // Remove the heart when its animation finishes.
-    heart.addEventListener("animationend", () => {
-      heart.remove();
-    }, { once: true });
-  }
-
-  // Create some hearts immediately, then keep adding them.
-  for (let i = 0; i < 12; i++) {
-    setTimeout(createHeart, i * 250);
-  }
-
-  setInterval(createHeart, 650);
-
-  // MOBILE NAVIGATION
-  if (menuToggle && navigation) {
-    menuToggle.addEventListener("click", () => {
-      const isOpen = navigation.classList.toggle("open");
-
-      menuToggle.setAttribute("aria-expanded", String(isOpen));
-      menuToggle.setAttribute(
-        "aria-label",
-        isOpen ? "Close navigation" : "Open navigation"
-      );
-      menuToggle.textContent = isOpen ? "✕" : "☰";
-    });
-
-    navigation.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        navigation.classList.remove("open");
-        menuToggle.setAttribute("aria-expanded", "false");
-        menuToggle.setAttribute("aria-label", "Open navigation");
-        menuToggle.textContent = "☰";
-      });
-    });
-
-    document.addEventListener("click", (event) => {
-      if (
-        navigation.classList.contains("open") &&
-        !navigation.contains(event.target) &&
-        !menuToggle.contains(event.target)
-      ) {
-        navigation.classList.remove("open");
-        menuToggle.setAttribute("aria-expanded", "false");
-        menuToggle.setAttribute("aria-label", "Open navigation");
-        menuToggle.textContent = "☰";
-      }
-    });
-  }
-
-  // OPEN AND CLOSE THE LOVE LETTER
-  if (openLetter && letterPaper) {
-    openLetter.addEventListener("click", () => {
-      letterPaper.hidden = false;
+    if (openLetter) {
       openLetter.setAttribute("aria-expanded", "true");
 
-      openLetter.querySelector(".envelope-hint").textContent =
-        "Your letter is open 💗";
+      const hint = openLetter.querySelector(".envelope-hint");
+      if (hint) hint.textContent = "Your letter is open 💗";
+    }
 
-      setTimeout(() => {
-        letterPaper.scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
-      }, 100);
-    });
+    setTimeout(function () {
+      letterPaper.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+    }, 100);
+
+    // Add a small heart burst.
+    for (let i = 0; i < 8; i++) {
+      setTimeout(createFloatingHeart, i * 100);
+    }
   }
 
-  if (closeLetter && letterPaper && openLetter) {
-    closeLetter.addEventListener("click", () => {
-      letterPaper.hidden = true;
+  function closeLoveLetter() {
+    if (!letterPaper) return;
+
+    letterPaper.hidden = true;
+
+    if (openLetter) {
       openLetter.setAttribute("aria-expanded", "false");
 
-      openLetter.querySelector(".envelope-hint").textContent =
-        "Tap to open ♡";
+      const hint = openLetter.querySelector(".envelope-hint");
+      if (hint) hint.textContent = "Tap to open ♡";
 
       openLetter.scrollIntoView({
         behavior: "smooth",
         block: "center"
       });
-    });
+    }
   }
 
-  // SURPRISE MESSAGES
-  const sweetMessages = [
-    "Celine, you don't have to be perfect to be appreciated. You deserve kindness just as you are. 🌷",
-    "One honest conversation can be the beginning of something beautiful. I'm happy to start there with you. 💗",
-    "You deserve someone who listens, respects your feelings and gives you room to be yourself. 🦋",
-    "I hope I can give you more reasons to smile, one genuine moment at a time. 💕",
-    "The best connections grow without force. I hope ours can grow with honesty, friendship and laughter. 💜",
-    "Celine, your happiness matters. Whatever happens between us, I hope you always feel respected. 🌸"
+  if (openLetter) {
+    openLetter.addEventListener("click", openLoveLetter);
+  }
+
+  if (closeLetter) {
+    closeLetter.addEventListener("click", closeLoveLetter);
+  }
+
+  // =====================================
+  // 4. SURPRISE BUTTON 🎁
+  // =====================================
+
+  const surpriseButton = document.getElementById("surpriseButton");
+  const surpriseMessage = document.getElementById("surpriseMessage");
+
+  const messages = [
+    "Surprise, Celine! 💗 You are special, and I hope life gives you countless reasons to smile.",
+    "A little reminder from Emmanuel: you deserve honesty, kindness and someone who respects your heart. 🌸",
+    "If trust takes time, that's okay. I would rather build something real with you slowly than rush something beautiful. 💕",
+    "Your smile is precious, Celine. I hope I can be one of the reasons you smile today. 🦋",
+    "Maybe our story starts with friendship, grows through trust and becomes something wonderful. 💜",
+    "Dear Celine, you don't owe me an answer. I simply wanted you to know that I care about you. ❤️",
+    "Sending you a little cloud of happiness, a thousand virtual hugs and a sky full of hearts! ☁️💖"
   ];
 
-  let previousMessage = -1;
+  let messageIndex = -1;
 
-  if (surpriseButton && surpriseMessage) {
-    surpriseButton.addEventListener("click", () => {
-      let nextMessage;
+  if (surpriseButton) {
+    surpriseButton.addEventListener("click", function () {
+      if (surpriseMessage) {
+        messageIndex = (messageIndex + 1) % messages.length;
 
-      do {
-        nextMessage = Math.floor(Math.random() * sweetMessages.length);
-      } while (
-        sweetMessages.length > 1 &&
-        nextMessage === previousMessage
-      );
+        surpriseMessage.textContent = messages[messageIndex];
+        surpriseMessage.hidden = false;
 
-      previousMessage = nextMessage;
+        surpriseMessage.classList.remove("surprise-pop");
+        void surpriseMessage.offsetWidth;
+        surpriseMessage.classList.add("surprise-pop");
+      } else {
+        alert(messages[(messageIndex = (messageIndex + 1) % messages.length)]);
+      }
 
-      surpriseMessage.animate(
-        [
-          { opacity: 0, transform: "translateY(8px)" },
-          { opacity: 1, transform: "translateY(0)" }
-        ],
-        { duration: 450, easing: "ease-out" }
-      );
+      surpriseButton.textContent = "Open Another Surprise 💝";
 
-      surpriseMessage.textContent = sweetMessages[nextMessage];
-      surpriseButton.textContent = "Another Little Surprise 💝";
-
-      // A small burst of hearts for the surprise.
-      for (let i = 0; i < 5; i++) {
-        setTimeout(createHeart, i * 120);
+      for (let i = 0; i < 10; i++) {
+        setTimeout(createFloatingHeart, i * 100);
       }
     });
   }
 
-  // DISPLAY CELINE'S RESPONSE
-  function showResponse(message) {
+  // =====================================
+  // 5. CELINE'S ANSWER 💞
+  // =====================================
+
+  const yesButton = document.getElementById("yesButton");
+  const slowButton = document.getElementById("slowButton");
+  const answerResult = document.getElementById("answerResult");
+
+  function showAnswer(message) {
     if (!answerResult) return;
 
-    answerResult.hidden = false;
     answerResult.textContent = message;
-
+    answerResult.hidden = false;
     answerResult.scrollIntoView({
       behavior: "smooth",
       block: "nearest"
@@ -205,45 +196,25 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (yesButton) {
-    yesButton.addEventListener("click", () => {
-      showResponse(
-        "Celine, thank you for giving this a chance! 💗 Let's start with honesty, friendship and getting to know each other better. We'll take each step together, at a pace that feels right for both of us. — Emmanuel"
+    yesButton.addEventListener("click", function () {
+      showAnswer(
+        "Thank you, Celine! 💗 Let's start with friendship, honesty and getting to know each other better. We can let our connection grow naturally, together. — Emmanuel"
       );
 
-      for (let i = 0; i < 14; i++) {
-        setTimeout(createHeart, i * 100);
+      for (let i = 0; i < 15; i++) {
+        setTimeout(createFloatingHeart, i * 100);
       }
     });
   }
 
   if (slowButton) {
-    slowButton.addEventListener("click", () => {
-      showResponse(
-        "That's completely okay, Celine. 💜 We don't have to rush anything. I'll respect your pace, and we can start with friendship and honest conversations. Thank you for telling me how you feel. — Emmanuel"
+    slowButton.addEventListener("click", function () {
+      showAnswer(
+        "That's completely okay, Celine. 💜 We can take our time. I'll respect your feelings and let trust grow naturally, without pressure. Thank you for being honest with me. — Emmanuel"
       );
     });
   }
 
-  // KEEP THE YEAR CURRENT
-  const footer = document.querySelector(".footer");
-
-  if (footer) {
-    const year = new Date().getFullYear();
-    const yearNote = document.createElement("p");
-
-    yearNote.className = "footer-year";
-    yearNote.textContent = `© ${year} Emmanuel`;
-    footer.appendChild(yearNote);
-  }
-
-  // RESPECT REDUCED-MOTION SETTINGS
-  // The CSS also reduces animation when requested by the device.
-  const reduceMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  );
-
-  if (reduceMotion.matches && heartsBackground) {
-    heartsBackground.replaceChildren();
-  }
+  console.log("Celine's love website is ready! 💗");
 });
 ```
