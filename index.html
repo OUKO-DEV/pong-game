@@ -4,112 +4,193 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>For Celine 💗 | From Emmanuel</title>
+  <meta name="theme-color" content="#ffedf4">
+  <meta name="description" content="A special get-well-soon website made with love for Phyllis Moraa.">
+  <title>Get Well Soon, Mom ❤️ | Phyllis Moraa</title>
   <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
 </head>
 <body>
-  <div id="hearts" aria-hidden="true"></div>
 
-  <header class="hero">
-    <div class="badge">A little website made with love 💌</div>
-    <h1>For You, <span>Celine</span> 💗</h1>
-    <p class="subtitle">A special message from Emmanuel</p>
-    <p class="intro">
-      Some people make ordinary days feel special.
-      You are one of those people, and I wanted to remind you.
-    </p>
-    <a class="primary-btn" href="#message">A little message for you ↓</a>
+  <div class="hearts-background" id="heartsBackground" aria-hidden="true"></div>
+
+  <header class="navbar">
+    <a href="#home" class="logo">
+      <span class="logo-heart">💗</span>
+      <span>
+        <strong>For My Mom</strong>
+        <small>Phyllis Moraa</small>
+      </span>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle"
+      aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+    <nav id="navigation">
+      <a href="#home">Home</a>
+      <a href="#messages">Messages</a>
+      <a href="#letter">My Letter</a>
+      <a href="#surprise">Surprise ❤️</a>
+    </nav>
   </header>
 
   <main>
-    <section class="glass card" id="message">
-      <div class="emoji">🌷</div>
-      <h2>Hey, Celine!</h2>
-      <p>
-        You are a special person in my life. Thank you for being my bestie
-        and for being the amazing person you are. Never forget how much
-        your smile and presence can brighten someone's day. 💕
-      </p>
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <span class="eyebrow">A MESSAGE FROM YOUR CHILD 💕</span>
+
+        <h1>Get Well Soon,<br>
+          <span>Mom Phyllis Moraa</span>
+        </h1>
+
+        <p class="hero-text">
+          My beautiful mom, you mean more to me than words can explain.
+          I wish you healing, peace, strength, and brighter days ahead.
+          Please take your time to rest and remember that you are deeply loved.
+        </p>
+
+        <p class="handwriting">Your smile means the world to me. ❤️</p>
+
+        <a class="primary-btn" href="#letter">Read My Letter 💌</a>
+      </div>
+
+      <div class="hero-image">
+        <div class="flower-art" aria-label="Flowers and a get well message">
+          <span class="flower">🌷</span>
+          <span class="flower">🌸</span>
+          <span class="flower">🌹</span>
+          <span class="flower">💐</span>
+          <span class="flower">🌼</span>
+          <span class="flower">🌷</span>
+          <div class="flower-message">
+            <span>For the Best Mom</span>
+            <strong>Rest, Heal & Smile Again</strong>
+            <span>We love you, Mom! 💗</span>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section class="glass card">
-      <div class="emoji">💌</div>
-      <h2>A letter just for you</h2>
-      <p>There are a few things I wanted to tell you personally.</p>
-      <button class="primary-btn" id="letterBtn" type="button">
-        Open your letter 💌
-      </button>
-      <article id="letter" class="letter hidden">
-        <h3>Dear Celine, 💗</h3>
+    <section class="love-section" id="messages">
+      <div class="section-heading">
+        <span class="eyebrow">A LITTLE REMINDER</span>
+        <h2>Dear Mom, You Are So Special</h2>
+        <p>Some things I want you to remember every day.</p>
+      </div>
+
+      <div class="message-grid">
+        <article class="message-card">
+          <span class="card-icon">💖</span>
+          <h3>You Are Loved</h3>
+          <p>You are precious to me, Mom. Nothing changes how much you mean to me.</p>
+        </article>
+
+        <article class="message-card">
+          <span class="card-icon">🌻</span>
+          <h3>Take Your Time</h3>
+          <p>Give yourself time to rest and recover. You deserve care, comfort, and peace.</p>
+        </article>
+
+        <article class="message-card">
+          <span class="card-icon">🕊️</span>
+          <h3>Keep Hope Alive</h3>
+          <p>May every new day bring you comfort, courage, and renewed hope.</p>
+        </article>
+
+        <article class="message-card">
+          <span class="card-icon">🤗</span>
+          <h3>You Are Not Alone</h3>
+          <p>I am thinking of you, cheering you on, and sending you all my love.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="letter-section" id="letter">
+      <div class="letter-card">
+        <span class="letter-decoration">💌</span>
+        <span class="eyebrow">A LETTER FROM MY HEART</span>
+        <h2>To My Beautiful Mom, Phyllis Moraa</h2>
+
+        <p>Dear Mom,</p>
+
         <p>
-          I made this little corner of the internet just for you because
-          I wanted you to know that you matter to me.
+          I wish I could take away all your discomfort and replace it
+          with happiness, peace, and comfort. Seeing you go through a
+          difficult time reminds me how precious you are to me.
         </p>
+
         <p>
-          I would love for us to keep growing our friendship and getting
-          to know each other better. Maybe, with time, we could become
-          something more — but only if we both genuinely feel that way.
+          You are more than a mother to me. You are a special part of
+          my life, and I am so grateful for all the love and care you
+          have given me. You deserve to be surrounded by kindness,
+          patience, and encouragement.
         </p>
+
         <p>
-          I understand that trusting someone takes time. I don't expect
-          you to trust me immediately, and I don't want you to feel
-          pressured to give me an answer. I'd rather show you through
-          my actions that I respect you and your feelings.
+          Please remember that you do not have to rush your recovery.
+          Take things one day at a time, get the care you need, and
+          allow yourself to rest. I am wishing you strength for today
+          and brighter, healthier days ahead.
         </p>
+
         <p>
-          Whatever happens, I hope we can share honesty, kindness,
-          laughter, and beautiful memories. You deserve to feel safe,
-          respected, and appreciated. 🌷
+          Mom, I love you so much. No matter how difficult today feels,
+          I hope you never forget how important you are to me.
         </p>
-        <p class="signature">With care, Emmanuel 💗</p>
-        <button class="secondary-btn" id="closeLetter" type="button">
-          Close letter
+
+        <p class="letter-ending">
+          Get well soon, my lovely mom. ❤️<br>
+          <strong>With all my love, Emmanuel 💗</strong>
+        </p>
+
+        <button class="primary-btn" id="hugButton">
+          Send Mom a Virtual Hug 🤗
         </button>
-      </article>
+        <p id="hugMessage" class="hug-message" aria-live="polite"></p>
+      </div>
     </section>
 
-    <section class="glass card">
-      <div class="emoji">🎁</div>
-      <h2>A little surprise</h2>
-      <p>Ready for a tiny reminder of how special you are?</p>
-      <button class="primary-btn" id="surpriseBtn" type="button">
-        Open my surprise ✨
-      </button>
-      <div id="surprise" class="surprise hidden" aria-live="polite">
-        <div class="big-heart">💖</div>
-        <h3>You are appreciated, Celine!</h3>
+    <section class="surprise-section" id="surprise">
+      <div class="surprise-card">
+        <span class="eyebrow">A LITTLE SURPRISE FOR YOU</span>
+        <h2>Mom, This One Is Just for You! 🎁</h2>
         <p>
-          Never doubt your worth. Keep smiling, keep shining,
-          and always be yourself. The world needs your kind of magic. 🌸
+          There is something special I want you to hear.
+          Tap the button below, Mom.
         </p>
+
+        <button class="primary-btn" id="surpriseButton">
+          Open Your Surprise 💝
+        </button>
+
+        <div id="surpriseMessage" class="surprise-message"
+          aria-live="polite" hidden>
+          <div class="surprise-heart">💗🌹💗</div>
+          <h3>I Love You, Mom!</h3>
+          <p>
+            Phyllis Moraa, you will always hold a special place in my heart.
+            May your days be filled with comfort, loving people, peaceful
+            moments, and renewed strength. Get well soon, Mom.
+            The world is brighter with you in it! ❤️
+          </p>
+          <span>Forever your loving child, Emmanuel 💕</span>
+        </div>
       </div>
     </section>
 
-    <section class="glass card">
-      <div class="emoji">💕</div>
-      <h2>A tiny friendship quiz</h2>
-      <p>What makes a friendship truly special?</p>
-      <div class="quiz-options">
-        <button class="quiz-option" data-answer="wrong">Expensive gifts 🎁</button>
-        <button class="quiz-option" data-answer="right">Trust, honesty and care 💗</button>
-        <button class="quiz-option" data-answer="wrong">Never disagreeing 🌈</button>
-      </div>
-      <p id="quizResult" class="quiz-result" aria-live="polite"></p>
-    </section>
-
-    <section class="final-note">
-      <div class="emoji">🫶</div>
-      <h2>One last thing...</h2>
-      <p>
-        No pressure, no rush — just a genuine wish to know you better
-        and build something beautiful, one day at a time.
-      </p>
-      <p class="signature">Made especially for Celine by Emmanuel 💗</p>
+    <section class="final-wish">
+      <div class="final-emoji">🌷 💗 🌷</div>
+      <h2>Rest Today, Hope for Tomorrow</h2>
+      <p>One day at a time, Mom. You are loved more than you know.</p>
+      <p class="handwriting">Get well soon, Phyllis Moraa! ❤️</p>
     </section>
   </main>
 
-  <footer>Made with 💗, kindness, and a little bit of code.</footer>
+  <footer>
+    <p>Made with endless love for Phyllis Moraa 💗</p>
+    <p>Created by Emmanuel | Get Well Soon, Mom 🌹</p>
+    <a href="#home">Back to the top ↑</a>
+  </footer>
 
-  <script src="app.js"></script>
 </body>
 </html>
