@@ -2,173 +2,479 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#10091e">
-  <meta name="description" content="A special romantic surprise for Aggy Ja Kisii, from Emmanuel.">
-  <title>For Aggy Ja Kisii ❤️ | From Emmanuel</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#100b12">
+<title>For Sheila Pavana ❤️</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #100b12;
+  color: #fff5ef;
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+:root {
+  --gold: #e7c18b;
+  --pink: #e9a1b4;
+  --muted: #c9b8bd;
+  --panel: #1d151e;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 8%;
+  border-bottom: 1px solid #ffffff12;
+}
+
+.logo {
+  color: var(--gold);
+  font-family: 'Playfair Display', serif;
+  font-size: 21px;
+  letter-spacing: 2px;
+}
+
+.nav-note {
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.hero {
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 20px;
+  position: relative;
+  background:
+    radial-gradient(ellipse at 50% 45%, #5b263b55, transparent 65%),
+    linear-gradient(180deg, #100b12, #1a101a);
+}
+
+.hero-content {
+  max-width: 850px;
+  position: relative;
+  z-index: 2;
+  animation: appear 1.5s ease;
+}
+
+.eyebrow {
+  color: var(--gold);
+  letter-spacing: 5px;
+  font-size: 11px;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(48px, 9vw, 100px);
+  line-height: 1.08;
+  font-weight: 500;
+}
+
+h1 span {
+  display: block;
+  color: var(--pink);
+  font-style: italic;
+}
+
+.hero p {
+  color: var(--muted);
+  max-width: 570px;
+  line-height: 1.9;
+  margin: 28px auto;
+  font-size: 15px;
+}
+
+.btn {
+  display: inline-block;
+  background: linear-gradient(120deg, #e7c18b, #f3d9b4);
+  color: #24131a;
+  border: none;
+  border-radius: 40px;
+  padding: 15px 30px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: .3s;
+  margin: 8px;
+}
+
+.btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 35px #e7c18b44;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+}
+
+section {
+  padding: 100px 8%;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.section-title small {
+  color: var(--gold);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.section-title h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 5vw, 49px);
+  font-weight: 500;
+  margin-top: 15px;
+}
+
+.intro {
+  max-width: 780px;
+  text-align: center;
+  margin: auto;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 2;
+}
+
+.intro strong { color: var(--pink); }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+  max-width: 1050px;
+  margin: 50px auto 0;
+}
+
+.card {
+  background: linear-gradient(145deg, #261a26, #171119);
+  border: 1px solid #e7c18b22;
+  border-radius: 18px;
+  padding: 32px 25px;
+  text-align: center;
+  transition: .3s;
+}
+
+.card:hover {
+  transform: translateY(-7px);
+  border-color: var(--gold);
+}
+
+.card .symbol {
+  font-size: 31px;
+  margin-bottom: 18px;
+}
+
+.card h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--gold);
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.card p {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.apology {
+  background: linear-gradient(135deg, #271722, #17111b);
+  border-top: 1px solid #e7c18b22;
+  border-bottom: 1px solid #e7c18b22;
+}
+
+.letter {
+  max-width: 760px;
+  margin: auto;
+  padding: 45px;
+  background: #ffffff08;
+  border: 1px solid #e7c18b44;
+  border-radius: 20px;
+  line-height: 2;
+  color: #e6d5d9;
+}
+
+.letter h3 {
+  color: var(--gold);
+  font-family: 'Playfair Display', serif;
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.letter p { margin-bottom: 17px; }
+
+.signature {
+  color: var(--pink);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 24px;
+  margin-top: 25px;
+}
+
+.love-section {
+  text-align: center;
+  background: radial-gradient(ellipse at center, #59283e44, transparent 70%);
+}
+
+.big-heart {
+  font-size: 65px;
+  margin: 25px;
+  animation: heartbeat 1.5s infinite;
+}
+
+#answer {
+  color: var(--pink);
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  margin-top: 30px;
+  min-height: 40px;
+}
+
+footer {
+  padding: 40px 20px;
+  text-align: center;
+  border-top: 1px solid #ffffff12;
+  color: #a997a0;
+  font-size: 12px;
+  line-height: 2;
+}
+
+footer span { color: var(--gold); }
+
+.heart {
+  position: fixed;
+  bottom: -30px;
+  pointer-events: none;
+  z-index: 5;
+  animation: floatUp linear forwards;
+  opacity: .7;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media(max-width:600px) {
+  nav { padding: 20px 5%; }
+  .nav-note { font-size: 9px; letter-spacing: 1px; }
+  section { padding: 75px 6%; }
+  .letter { padding: 27px 22px; }
+  .hero { min-height: 80vh; }
+}
+</style>
 </head>
+
 <body>
-  <div class="hearts-bg" id="heartsBg" aria-hidden="true"></div>
 
-  <header class="navbar">
-    <a class="brand" href="#home">♥ Aggy Ja Kisii</a>
-    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">☰</button>
-    <nav id="navMenu">
-      <a href="#home">Home</a>
-      <a href="#about">About You</a>
-      <a href="#reasons">Why I Like You</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#letter">My Letter</a>
-    </nav>
-  </header>
+<nav>
+  <div class="logo">SHEILA PAVANA ♡</div>
+  <div class="nav-note">A story from my heart</div>
+</nav>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="hero-content">
-        <p class="eyebrow">A little surprise for someone special ✨</p>
-        <h1>Aggy Ja Kisii<span class="pink"> ♥</span></h1>
-        <p class="hero-subtitle">There is something I have been wanting to tell you...</p>
-        <p class="hero-description">
-          You started as my friend, but you have become someone
-          I would love to know more deeply. You make me smile,
-          and I wanted to tell you how I feel.
-        </p>
-        <a class="btn primary" href="#letter">Open My Heart 💗</a>
-        <a class="btn secondary" href="#reasons">Discover Your Surprise</a>
-      </div>
-      <div class="hero-decoration" aria-hidden="true">
-        <span>♡</span><span>♥</span><span>♡</span>
-      </div>
-    </section>
+<header class="hero">
+  <div class="hero-content">
+    <div class="eyebrow">A special message • Made with love</div>
+    <h1>To My Beautiful <span>Sheila Pavana</span></h1>
+    <p>
+      Some people enter our lives and make ordinary moments
+      extraordinary. You are one of those people.
+      Today, I made something special just for you.
+    </p>
+    <a href="#message" class="btn">Discover Your Surprise ♡</a>
+    <a href="#apology" class="btn btn-outline">A Message From My Heart</a>
+  </div>
+</header>
 
-    <section class="section about" id="about">
-      <div class="section-heading">
-        <p class="eyebrow">A person worth appreciating</p>
-        <h2>Dear Aggy, <span class="pink">you are special.</span></h2>
-      </div>
-      <div class="about-card">
-        <div class="about-icon">🌷</div>
-        <div>
-          <h3>A little about you</h3>
-          <p>
-            Aggy Ja Kisii, I appreciate your presence in my life.
-            I enjoy having you as my friend, and I would love the
-            chance to make more beautiful memories with you.
-            This website is my small way of making you smile.
-          </p>
-          <div class="tags">
-            <span>Beautiful soul ✨</span>
-            <span>Special person 💕</span>
-            <span>One of a kind 🌸</span>
-          </div>
-        </div>
-      </div>
-    </section>
+<section id="message">
+  <div class="section-title">
+    <small>Chapter One</small>
+    <h2>You Are Important to Me</h2>
+  </div>
 
-    <section class="section reasons" id="reasons">
-      <div class="section-heading">
-        <p class="eyebrow">Straight from my heart</p>
-        <h2>Why I Like You <span class="pink">💖</span></h2>
-        <p>Here are a few things that make you special to me.</p>
-      </div>
-      <div class="reason-grid">
-        <article class="reason-card">
-          <span>😊</span>
-          <h3>Your Smile</h3>
-          <p>Your smile has a way of making an ordinary day feel brighter.</p>
-        </article>
-        <article class="reason-card">
-          <span>🌹</span>
-          <h3>Your Personality</h3>
-          <p>I want to know more about the person you are and the dreams you carry.</p>
-        </article>
-        <article class="reason-card">
-          <span>💫</span>
-          <h3>Your Presence</h3>
-          <p>I enjoy the moments we share and the friendship we are building.</p>
-        </article>
-        <article class="reason-card">
-          <span>💗</span>
-          <h3>The Possibility of Us</h3>
-          <p>I wonder what beautiful memories we could create if we gave love a chance.</p>
-        </article>
-      </div>
-    </section>
+  <div class="intro">
+    Sheila, I want you to know that you are not just another
+    person in my life. <strong>You are someone I genuinely
+    cherish.</strong> Your presence matters to me, your feelings
+    matter to me, and your happiness matters to me.
 
-    <section class="section gallery" id="gallery">
-      <div class="section-heading">
-        <p class="eyebrow">Memories and smiles</p>
-        <h2>A Little Gallery <span class="pink">📸</span></h2>
-        <p>Add your favourite photos of Aggy or pictures of the two of you here.</p>
-      </div>
-      <div class="gallery-grid">
-        <figure class="photo-card">
-          <img src="photos/aggy1.jpg" alt="Aggy's photo" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
-          <div class="photo-placeholder">🌸<br>Her beautiful smile</div>
-          <figcaption>A smile to remember 💕</figcaption>
-        </figure>
-        <figure class="photo-card">
-          <img src="photos/aggy2.jpg" alt="A special photo of Aggy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
-          <div class="photo-placeholder">💖<br>A special memory</div>
-          <figcaption>Beautiful moments ✨</figcaption>
-        </figure>
-        <figure class="photo-card">
-          <img src="photos/us.jpg" alt="A memory together" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
-          <div class="photo-placeholder">🫶<br>Memories together</div>
-          <figcaption>More memories to come 🌷</figcaption>
-        </figure>
-      </div>
-    </section>
+    I may not always find the perfect words, but I want my
+    actions to show you that you have a special place in my heart.
+  </div>
 
-    <section class="section letter-section" id="letter">
-      <div class="letter">
-        <p class="eyebrow">A message from Emmanuel 💌</p>
-        <h2>My Dear Aggy,</h2>
-        <p>
-          I have been thinking about how to tell you this, and I decided
-          to make something special instead of keeping it all to myself.
-        </p>
-        <p>
-          You are a friend I appreciate, and lately I have found myself
-          wanting something more than friendship. I would love to spend
-          more time with you, learn more about you, support your dreams,
-          and see where our connection might lead.
-        </p>
-        <p>
-          I cannot promise to be perfect, but I can promise to be honest
-          with you, respect you, listen to you, and value your feelings.
-          Whatever your answer, our friendship and your comfort matter to me.
-        </p>
-        <p class="signature">With a smile and a hopeful heart, <br> Emmanuel ❤️</p>
-      </div>
-    </section>
+  <div class="cards">
+    <div class="card">
+      <div class="symbol">♡</div>
+      <h3>Your Place</h3>
+      <p>You deserve to feel valued, respected and appreciated every day.</p>
+    </div>
 
-    <section class="proposal" id="proposal">
-      <div class="proposal-heart" aria-hidden="true">💗</div>
-      <p class="eyebrow">One little question...</p>
-      <h2>Aggy Ja Kisii, <br><span>will you be my girl?</span></h2>
-      <p class="proposal-copy">
-        I would love the chance to make you feel appreciated,
-        respected, and special. Take your time and answer honestly.
-      </p>
-      <div class="proposal-buttons">
-        <button class="btn primary" id="yesBtn">Yes, let's try ❤️</button>
-        <button class="btn secondary" id="thinkBtn">Let me think 🌷</button>
-      </div>
-      <p class="response-message" id="responseMessage" role="status" aria-live="polite"></p>
-    </section>
-  </main>
+    <div class="card">
+      <div class="symbol">✧</div>
+      <h3>Your Smile</h3>
+      <p>Your happiness is something I never want to take for granted.</p>
+    </div>
 
-  <footer>
-    <p>Made with 💗 by Emmanuel, especially for Aggy Ja Kisii.</p>
-    <a href="#home">Back to the top ↑</a>
-  </footer>
+    <div class="card">
+      <div class="symbol">∞</div>
+      <h3>Our Journey</h3>
+      <p>I want us to grow through honesty, patience, trust and understanding.</p>
+    </div>
+  </div>
+</section>
 
-  <script src="app.js"></script>
+<section class="apology" id="apology">
+  <div class="section-title">
+    <small>Chapter Two</small>
+    <h2>Something I Need to Say</h2>
+  </div>
+
+  <div class="letter">
+    <h3>My Dearest Sheila,</h3>
+
+    <p>
+      There is something I genuinely want to apologise for.
+      I am sorry for saving your ex's contact. I understand
+      that this may have hurt you, made you uncomfortable,
+      or made you question how much I value your feelings.
+    </p>
+
+    <p>
+      I don't want to make excuses or pretend that your feelings
+      do not matter. I should have been more thoughtful and
+      considered how that decision could affect you.
+    </p>
+
+    <p>
+      Please understand that I am not asking you to ignore
+      how you feel. I am asking for an opportunity to show
+      you through my actions that I can do better.
+    </p>
+
+    <p>
+      You deserve honesty, reassurance, respect and peace.
+      I never want you to feel like you are competing with
+      anyone for your place in my life.
+    </p>
+
+    <p>
+      I cannot change what happened, but I can take responsibility
+      for it and make better choices moving forward.
+    </p>
+
+    <div class="signature">
+      I'm truly sorry, Sheila. ❤️
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-title">
+    <small>Chapter Three</small>
+    <h2>What I Want You to Remember</h2>
+  </div>
+
+  <div class="intro">
+    I don't promise to be perfect. I promise to keep learning,
+    communicating and growing. I want a relationship where
+    we both feel secure, heard, respected and loved.
+
+    <br><br>
+
+    <strong>Sheila Pavana, you matter to me.
+    More than a website can ever explain.</strong>
+  </div>
+</section>
+
+<section class="love-section">
+  <div class="section-title">
+    <small>One Last Question</small>
+    <h2>Can We Keep Writing Our Story?</h2>
+  </div>
+
+  <div class="big-heart">❤️</div>
+
+  <p class="intro">
+    I know forgiveness is your choice, and I respect that.
+    But if your heart is willing, I would love the chance
+    to make things better between us.
+  </p>
+
+  <button class="btn" onclick="forgive()">Sheila, Will You Forgive Me? ❤️</button>
+
+  <div id="answer"></div>
+</section>
+
+<footer>
+  Made with love, honesty and a sincere heart.<br>
+  For <span>Sheila Pavana</span> — Always special. ♡
+  <br>© 2026
+</footer>
+
+<script>
+function forgive() {
+  document.getElementById("answer").innerHTML =
+    "Thank you for hearing my heart, Sheila. ❤️<br>" +
+    "Whatever you decide, I want to keep showing you respect and love.";
+
+  for (let i = 0; i < 25; i++) {
+    setTimeout(createHeart, i * 100);
+  }
+}
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = ["❤️", "💕", "♡", "💗"][Math.floor(Math.random()*4)];
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (15 + Math.random() * 20) + "px";
+  heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 8000);
+}
+
+setInterval(() => {
+  if (Math.random() > 0.55) createHeart();
+}, 1500);
+</script>
+
 </body>
 </html>
