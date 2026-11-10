@@ -2,479 +2,272 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#100b12">
-<title>For Sheila Pavana ❤️</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100b12">
+  <meta name="description" content="A special love letter dedicated to Sheila Pavana.">
+  <title>Sheila Pavana | You Are Special ❤️</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  background: #100b12;
-  color: #fff5ef;
-  font-family: 'DM Sans', sans-serif;
-  overflow-x: hidden;
-}
-
-:root {
-  --gold: #e7c18b;
-  --pink: #e9a1b4;
-  --muted: #c9b8bd;
-  --panel: #1d151e;
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 24px 8%;
-  border-bottom: 1px solid #ffffff12;
-}
-
-.logo {
-  color: var(--gold);
-  font-family: 'Playfair Display', serif;
-  font-size: 21px;
-  letter-spacing: 2px;
-}
-
-.nav-note {
-  color: var(--muted);
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.hero {
-  min-height: 88vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 80px 20px;
-  position: relative;
-  background:
-    radial-gradient(ellipse at 50% 45%, #5b263b55, transparent 65%),
-    linear-gradient(180deg, #100b12, #1a101a);
-}
-
-.hero-content {
-  max-width: 850px;
-  position: relative;
-  z-index: 2;
-  animation: appear 1.5s ease;
-}
-
-.eyebrow {
-  color: var(--gold);
-  letter-spacing: 5px;
-  font-size: 11px;
-  text-transform: uppercase;
-  margin-bottom: 30px;
-}
-
-h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(48px, 9vw, 100px);
-  line-height: 1.08;
-  font-weight: 500;
-}
-
-h1 span {
-  display: block;
-  color: var(--pink);
-  font-style: italic;
-}
-
-.hero p {
-  color: var(--muted);
-  max-width: 570px;
-  line-height: 1.9;
-  margin: 28px auto;
-  font-size: 15px;
-}
-
-.btn {
-  display: inline-block;
-  background: linear-gradient(120deg, #e7c18b, #f3d9b4);
-  color: #24131a;
-  border: none;
-  border-radius: 40px;
-  padding: 15px 30px;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  transition: .3s;
-  margin: 8px;
-}
-
-.btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 35px #e7c18b44;
-}
-
-.btn-outline {
-  background: transparent;
-  color: var(--gold);
-  border: 1px solid var(--gold);
-}
-
-section {
-  padding: 100px 8%;
-}
-
-.section-title {
-  text-align: center;
-  margin-bottom: 45px;
-}
-
-.section-title small {
-  color: var(--gold);
-  letter-spacing: 4px;
-  text-transform: uppercase;
-}
-
-.section-title h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(32px, 5vw, 49px);
-  font-weight: 500;
-  margin-top: 15px;
-}
-
-.intro {
-  max-width: 780px;
-  text-align: center;
-  margin: auto;
-  color: var(--muted);
-  font-size: 16px;
-  line-height: 2;
-}
-
-.intro strong { color: var(--pink); }
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 22px;
-  max-width: 1050px;
-  margin: 50px auto 0;
-}
-
-.card {
-  background: linear-gradient(145deg, #261a26, #171119);
-  border: 1px solid #e7c18b22;
-  border-radius: 18px;
-  padding: 32px 25px;
-  text-align: center;
-  transition: .3s;
-}
-
-.card:hover {
-  transform: translateY(-7px);
-  border-color: var(--gold);
-}
-
-.card .symbol {
-  font-size: 31px;
-  margin-bottom: 18px;
-}
-
-.card h3 {
-  font-family: 'Playfair Display', serif;
-  color: var(--gold);
-  font-size: 22px;
-  margin-bottom: 12px;
-}
-
-.card p {
-  color: var(--muted);
-  line-height: 1.8;
-  font-size: 14px;
-}
-
-.apology {
-  background: linear-gradient(135deg, #271722, #17111b);
-  border-top: 1px solid #e7c18b22;
-  border-bottom: 1px solid #e7c18b22;
-}
-
-.letter {
-  max-width: 760px;
-  margin: auto;
-  padding: 45px;
-  background: #ffffff08;
-  border: 1px solid #e7c18b44;
-  border-radius: 20px;
-  line-height: 2;
-  color: #e6d5d9;
-}
-
-.letter h3 {
-  color: var(--gold);
-  font-family: 'Playfair Display', serif;
-  font-size: 30px;
-  margin-bottom: 20px;
-}
-
-.letter p { margin-bottom: 17px; }
-
-.signature {
-  color: var(--pink);
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 24px;
-  margin-top: 25px;
-}
-
-.love-section {
-  text-align: center;
-  background: radial-gradient(ellipse at center, #59283e44, transparent 70%);
-}
-
-.big-heart {
-  font-size: 65px;
-  margin: 25px;
-  animation: heartbeat 1.5s infinite;
-}
-
-#answer {
-  color: var(--pink);
-  font-family: 'Playfair Display', serif;
-  font-size: 26px;
-  margin-top: 30px;
-  min-height: 40px;
-}
-
-footer {
-  padding: 40px 20px;
-  text-align: center;
-  border-top: 1px solid #ffffff12;
-  color: #a997a0;
-  font-size: 12px;
-  line-height: 2;
-}
-
-footer span { color: var(--gold); }
-
-.heart {
-  position: fixed;
-  bottom: -30px;
-  pointer-events: none;
-  z-index: 5;
-  animation: floatUp linear forwards;
-  opacity: .7;
-}
-
-@keyframes floatUp {
-  to {
-    transform: translateY(-110vh) rotate(360deg);
-    opacity: 0;
-  }
-}
-
-@keyframes heartbeat {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-}
-
-@keyframes appear {
-  from { opacity: 0; transform: translateY(25px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@media(max-width:600px) {
-  nav { padding: 20px 5%; }
-  .nav-note { font-size: 9px; letter-spacing: 1px; }
-  section { padding: 75px 6%; }
-  .letter { padding: 27px 22px; }
-  .hero { min-height: 80vh; }
-}
-</style>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
 </head>
 
 <body>
 
-<nav>
-  <div class="logo">SHEILA PAVANA ♡</div>
-  <div class="nav-note">A story from my heart</div>
-</nav>
-
-<header class="hero">
-  <div class="hero-content">
-    <div class="eyebrow">A special message • Made with love</div>
-    <h1>To My Beautiful <span>Sheila Pavana</span></h1>
-    <p>
-      Some people enter our lives and make ordinary moments
-      extraordinary. You are one of those people.
-      Today, I made something special just for you.
-    </p>
-    <a href="#message" class="btn">Discover Your Surprise ♡</a>
-    <a href="#apology" class="btn btn-outline">A Message From My Heart</a>
-  </div>
-</header>
-
-<section id="message">
-  <div class="section-title">
-    <small>Chapter One</small>
-    <h2>You Are Important to Me</h2>
+  <div class="loader" id="loader">
+    <div class="loader-heart">❤️</div>
+    <p>Preparing something special...</p>
   </div>
 
-  <div class="intro">
-    Sheila, I want you to know that you are not just another
-    person in my life. <strong>You are someone I genuinely
-    cherish.</strong> Your presence matters to me, your feelings
-    matter to me, and your happiness matters to me.
+  <nav class="navbar">
+    <a href="#" class="logo">SHEILA <span>♡</span></a>
+    <div class="nav-text">A MESSAGE FROM MY HEART</div>
+    <button class="music-btn" id="musicBtn">♫ Music</button>
+  </nav>
 
-    I may not always find the perfect words, but I want my
-    actions to show you that you have a special place in my heart.
-  </div>
+  <audio id="backgroundMusic" loop>
+    <source src="love-song.mp3" type="audio/mpeg">
+  </audio>
 
-  <div class="cards">
-    <div class="card">
-      <div class="symbol">♡</div>
-      <h3>Your Place</h3>
-      <p>You deserve to feel valued, respected and appreciated every day.</p>
+  <!-- HERO -->
+
+  <header class="hero">
+    <div class="hero-glow"></div>
+
+    <div class="hero-content reveal">
+      <p class="eyebrow">A SPECIAL DEDICATION • 2026</p>
+
+      <h1>
+        To My Beautiful
+        <span>Sheila Pavana</span>
+      </h1>
+
+      <p class="hero-description">
+        In a world full of people, you are someone
+        whose presence means something special to me.
+        I made this little corner of the internet
+        entirely for you.
+      </p>
+
+      <a href="#about" class="primary-btn">Discover Your Surprise ♡</a>
+
+      <p class="small-note">Made with love, just for you.</p>
     </div>
 
-    <div class="card">
-      <div class="symbol">✧</div>
-      <h3>Your Smile</h3>
-      <p>Your happiness is something I never want to take for granted.</p>
+    <div class="scroll-indicator">SCROLL TO EXPLORE ↓</div>
+  </header>
+
+  <!-- ABOUT -->
+
+  <section id="about" class="section">
+    <div class="section-heading reveal">
+      <span>01 — THE REASON</span>
+      <h2>You Are Important to Me</h2>
     </div>
 
-    <div class="card">
-      <div class="symbol">∞</div>
-      <h3>Our Journey</h3>
-      <p>I want us to grow through honesty, patience, trust and understanding.</p>
+    <div class="about-content reveal">
+      <p>
+        Sheila, I want you to understand something.
+        You are not just an ordinary person in my life.
+        You are someone I genuinely care about.
+      </p>
+
+      <p>
+        Your feelings matter. Your happiness matters.
+        Your peace matters. I want you to feel appreciated,
+        respected and loved without having to question
+        your importance in my life.
+      </p>
+
+      <p class="highlight">
+        You deserve to feel special, not just through words,
+        but through consistent actions.
+      </p>
     </div>
-  </div>
-</section>
 
-<section class="apology" id="apology">
-  <div class="section-title">
-    <small>Chapter Two</small>
-    <h2>Something I Need to Say</h2>
-  </div>
+    <div class="cards">
+      <article class="card reveal">
+        <div class="card-icon">♡</div>
+        <h3>Your Importance</h3>
+        <p>You have a special place in my heart that I never want you to doubt.</p>
+      </article>
 
-  <div class="letter">
-    <h3>My Dearest Sheila,</h3>
+      <article class="card reveal">
+        <div class="card-icon">✧</div>
+        <h3>Your Happiness</h3>
+        <p>Your smile and peace are things I genuinely want to protect.</p>
+      </article>
 
-    <p>
-      There is something I genuinely want to apologise for.
-      I am sorry for saving your ex's contact. I understand
-      that this may have hurt you, made you uncomfortable,
-      or made you question how much I value your feelings.
-    </p>
-
-    <p>
-      I don't want to make excuses or pretend that your feelings
-      do not matter. I should have been more thoughtful and
-      considered how that decision could affect you.
-    </p>
-
-    <p>
-      Please understand that I am not asking you to ignore
-      how you feel. I am asking for an opportunity to show
-      you through my actions that I can do better.
-    </p>
-
-    <p>
-      You deserve honesty, reassurance, respect and peace.
-      I never want you to feel like you are competing with
-      anyone for your place in my life.
-    </p>
-
-    <p>
-      I cannot change what happened, but I can take responsibility
-      for it and make better choices moving forward.
-    </p>
-
-    <div class="signature">
-      I'm truly sorry, Sheila. ❤️
+      <article class="card reveal">
+        <div class="card-icon">∞</div>
+        <h3>Our Journey</h3>
+        <p>I want us to build something beautiful through honesty and trust.</p>
+      </article>
     </div>
-  </div>
-</section>
+  </section>
 
-<section>
-  <div class="section-title">
-    <small>Chapter Three</small>
-    <h2>What I Want You to Remember</h2>
-  </div>
+  <!-- APOLOGY -->
 
-  <div class="intro">
-    I don't promise to be perfect. I promise to keep learning,
-    communicating and growing. I want a relationship where
-    we both feel secure, heard, respected and loved.
+  <section id="apology" class="section apology-section">
+    <div class="section-heading reveal">
+      <span>02 — FROM MY HEART</span>
+      <h2>I Owe You an Apology</h2>
+    </div>
 
-    <br><br>
+    <article class="letter reveal">
+      <div class="letter-decoration">♡</div>
 
-    <strong>Sheila Pavana, you matter to me.
-    More than a website can ever explain.</strong>
-  </div>
-</section>
+      <h3>My Dearest Sheila,</h3>
 
-<section class="love-section">
-  <div class="section-title">
-    <small>One Last Question</small>
-    <h2>Can We Keep Writing Our Story?</h2>
-  </div>
+      <p>
+        There is something I genuinely want to apologise for.
+        I am sorry for saving your ex's contact.
+      </p>
 
-  <div class="big-heart">❤️</div>
+      <p>
+        I understand that this may have hurt you, made you
+        uncomfortable, or made you question how much
+        I value your feelings.
+      </p>
 
-  <p class="intro">
-    I know forgiveness is your choice, and I respect that.
-    But if your heart is willing, I would love the chance
-    to make things better between us.
-  </p>
+      <p>
+        I don't want to make excuses or dismiss how you feel.
+        I should have been more thoughtful and considered
+        how my actions could affect you.
+      </p>
 
-  <button class="btn" onclick="forgive()">Sheila, Will You Forgive Me? ❤️</button>
+      <p>
+        I never want you to feel like you are competing
+        with anyone for your place in my life.
+        You deserve honesty, reassurance, respect and peace.
+      </p>
 
-  <div id="answer"></div>
-</section>
+      <p>
+        I cannot change what happened, but I can take
+        responsibility and make better choices.
+        I hope I can show you that through my actions.
+      </p>
 
-<footer>
-  Made with love, honesty and a sincere heart.<br>
-  For <span>Sheila Pavana</span> — Always special. ♡
-  <br>© 2026
-</footer>
+      <p class="signature">
+        I'm truly sorry, Sheila. ❤️
+      </p>
 
-<script>
-function forgive() {
-  document.getElementById("answer").innerHTML =
-    "Thank you for hearing my heart, Sheila. ❤️<br>" +
-    "Whatever you decide, I want to keep showing you respect and love.";
+      <p class="letter-footer">With sincerity, from someone who cares about you.</p>
+    </article>
+  </section>
 
-  for (let i = 0; i < 25; i++) {
-    setTimeout(createHeart, i * 100);
-  }
-}
+  <!-- SPECIAL MESSAGE -->
 
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = ["❤️", "💕", "♡", "💗"][Math.floor(Math.random()*4)];
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = (15 + Math.random() * 20) + "px";
-  heart.style.animationDuration = (4 + Math.random() * 4) + "s";
-  document.body.appendChild(heart);
+  <section class="section special-section">
+    <div class="section-heading reveal">
+      <span>03 — SOMETHING SPECIAL</span>
+      <h2>There Is Only One You</h2>
+    </div>
 
-  setTimeout(() => heart.remove(), 8000);
-}
+    <div class="special-message reveal">
+      <div class="large-heart">❤️</div>
 
-setInterval(() => {
-  if (Math.random() > 0.55) createHeart();
-}, 1500);
-</script>
+      <p>
+        I don't need a perfect relationship.
+        I want a genuine one.
+      </p>
+
+      <p>
+        One where we communicate, forgive, understand
+        each other and continue growing together.
+      </p>
+
+      <p class="highlight">
+        Sheila Pavana, I am grateful to have you in my life.
+      </p>
+    </div>
+  </section>
+
+  <!-- SURPRISE LOVE LETTER -->
+
+  <section class="section surprise-section">
+    <div class="section-heading reveal">
+      <span>04 — A LITTLE SURPRISE</span>
+      <h2>A Letter Just for You</h2>
+    </div>
+
+    <div class="envelope reveal" id="envelope">
+      <div class="envelope-icon">💌</div>
+      <h3>A Private Message for Sheila</h3>
+      <p>There are some words I want you to read.</p>
+      <button class="primary-btn" id="openLetter">
+        Open Your Love Letter
+      </button>
+    </div>
+
+    <div class="modal" id="letterModal">
+      <div class="modal-content">
+        <button class="close-btn" id="closeLetter">×</button>
+        <div class="large-heart">💕</div>
+        <h3>My Beautiful Sheila</h3>
+
+        <p>
+          If I could remind you of one thing every day,
+          it would be this: you are worthy of love,
+          respect, honesty and happiness.
+        </p>
+
+        <p>
+          I appreciate you more than I sometimes manage
+          to express. I want to become better at showing it.
+        </p>
+
+        <p>
+          Thank you for being part of my story.
+          I hope we can continue writing beautiful chapters
+          together, one day at a time.
+        </p>
+
+        <p class="signature">Forever special to me. ❤️</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORGIVENESS -->
+
+  <section class="section forgiveness-section">
+    <div class="section-heading reveal">
+      <span>05 — ONE LAST QUESTION</span>
+      <h2>Can We Make Things Better?</h2>
+    </div>
+
+    <div class="forgiveness-content reveal">
+      <div class="large-heart">❤️</div>
+
+      <p>
+        I know forgiveness cannot be demanded.
+        It comes from the heart, and I respect your feelings.
+      </p>
+
+      <p>
+        But if you are willing, I would love the opportunity
+        to rebuild your trust and make you feel appreciated.
+      </p>
+
+      <button class="primary-btn" id="forgiveBtn">
+        Sheila, Will You Forgive Me? ❤️
+      </button>
+
+      <p id="answer" class="answer"></p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">SHEILA PAVANA ♡</div>
+    <p>Designed with love, honesty and a sincere heart.</p>
+    <p class="copyright">A special website dedicated to you. © 2026</p>
+  </footer>
+
+  <div id="heartContainer"></div>
 
 </body>
 </html>
